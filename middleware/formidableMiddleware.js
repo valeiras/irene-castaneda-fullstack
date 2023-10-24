@@ -14,10 +14,10 @@ export const formidableMiddleware = async (req, res, next) => {
       return;
     }
     for (const [key, value] of Object.entries(fields)) {
-      req.body[key] = value[0];
+      req.body[key] = value;
     }
     for (const [key, value] of Object.entries(files)) {
-      req.body[key] = value[0];
+      req.body[key] = value;
     }
 
     next();

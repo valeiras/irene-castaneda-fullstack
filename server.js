@@ -15,13 +15,11 @@ import authRouter from './routes/authRouter.js';
 import userRouter from './routes/userRouter.js';
 import adminRouter from './routes/adminRouter.js';
 import projectRouter from './routes/projectRouter.js';
+import publicationRouter from './routes/publicationRouter.js';
 
 // middleware
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
-import {
-  authenticateUser,
-  authorizePermissions,
-} from './middleware/authMiddleware.js';
+import { authenticateUser } from './middleware/authMiddleware.js';
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -45,16 +43,9 @@ app.get('/api/v1/test', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', authenticateUser, userRouter);
-app.use(
-  '/api/v1/admin',
-  [authenticateUser, authorizePermissions('admin')],
-  adminRouter
-);
-app.use(
-  '/api/v1/projects',
-  [authenticateUser, authorizePermissions('admin')],
-  projectRouter
-);
+app.use('/api/v1/admin', authenticateUser, adminRouter);
+app.use('/api/v1/projects', projectRouter);
+app.use('/api/v1/publications', publicationRouter);
 
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Not found' });

@@ -7,6 +7,7 @@ import {
 import mongoose from 'mongoose';
 import UserModel from '../models/UserModel.js';
 import ProjectModel from '../models/ProjectModel.js';
+import PublicationModel from '../models/PublicationModel.js';
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -58,16 +59,6 @@ export const validateLoginInput = withValidationErrors([
   body('password').notEmpty().withMessage('password is required'),
 ]);
 
-export const validateProjectIdParam = withValidationErrors([
-  param('projectId').custom(async (value, { req }) => {
-    const isValidId = mongoose.Types.ObjectId.isValid(value);
-    if (!isValidId) throw new Error('invalid mongoDB id');
-
-    const project = await ProjectModel.findById(value);
-    if (!project) throw new Error(`no project with id ${value}`);
-  }),
-]);
-
 export const validateUpdateUserInput = withValidationErrors([
   body('name').notEmpty().withMessage('name is required').trim(),
   body('email')
@@ -88,3 +79,34 @@ export const validateCreateProjectInput = withValidationErrors([
   body('description').notEmpty().withMessage('description is required').trim(),
   body('imageFile').notEmpty().withMessage('image file is required'),
 ]);
+
+export const validateCreatePublicationInput = withValidationErrors([
+  body('name').notEmpty().withMessage('name is required').trim(),
+  body('year').notEmpty().withMessage('year is required'),
+  // body('authors').notEmpty().withMessage('authors are required'),
+  body('publishedIn')
+    .notEmpty()
+    .withMessage('review or conference is required'),
+]);
+
+const validateIdParam = (paramName, ObjectModel) => {
+  return withValidationErrors([
+    param(paramName).custom(async (value, { req }) => {
+      const isValidId = mongoose.Types.ObjectId.isValid(value);
+      if (!isValidId) throw new Error('invalid mongoDB id');
+
+      const project = await ObjectModel.findById(value);
+      if (!project) throw new Error(`no project with id ${value}`);
+    }),
+  ]);
+};
+
+export const validateProjectIdParam = validateIdParam(
+  'projectId',
+  ProjectModel
+);
+
+export const validatePublicationIdParam = validateIdParam(
+  'publicationId',
+  PublicationModel
+);

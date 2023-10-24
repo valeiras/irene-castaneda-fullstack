@@ -9,16 +9,20 @@ export const getAllProjects = async (req, res) => {
 
 export const createProject = async (req, res) => {
   const response = await cloudinary.v2.uploader.upload(
-    req.body.imageFile.filepath,
+    req.body.imageFile[0].filepath,
     { folder: 'irene-castaneda' }
   );
 
   const newProjectData = {
-    ...req.body,
     cloudinaryUrl: response.url,
     cloudinaryId: response.public_id,
   };
+
+  for (const [key, value] of Object.entries(req.body)) {
+    newProjectData[key] = value[0];
+  }
   delete newProjectData.imageFile;
+
   const newProject = await ProjectModel.create(newProjectData);
 
   res.status(StatusCodes.CREATED).json({ msg: 'project created', newProject });
@@ -42,12 +46,17 @@ export const deleteProject = async (req, res) => {
 };
 
 export const updateProject = async (req, res) => {
-  if (req.body.imageFile) {
+  const newProjectData = {};
+  for (const [key, value] of Object.entries(req.body)) {
+    newProjectData[key] = value[0];
+  }
+
+  if (newProjectData.imageFile) {
     const oldProject = await ProjectModel.findById(req.params.projectId);
     await cloudinary.v2.uploader.destroy(oldProject.cloudinaryId);
 
     const response = await cloudinary.v2.uploader.upload(
-      req.body.imageFile.filepath,
+      newProjectData.imageFile.filepath,
       { folder: 'irene-castaneda' }
     );
     req.body.cloudinaryUrl = response.url;
@@ -56,7 +65,7 @@ export const updateProject = async (req, res) => {
 
   const updatedProject = await ProjectModel.findByIdAndUpdate(
     req.params.projectId,
-    req.body,
+    newProjectData,
     { new: true }
   );
   res.status(StatusCodes.OK).json({ msg: 'project updated', updatedProject });

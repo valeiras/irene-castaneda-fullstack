@@ -11,18 +11,22 @@ import {
   validateProjectIdParam,
 } from '../middleware/validationMiddleware.js';
 import { formidableMiddleware } from '../middleware/formidableMiddleware.js';
+import { authenticateUser } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
 router
   .route('/')
   .get(getAllProjects)
-  .post([formidableMiddleware, validateCreateProjectInput], createProject);
+  .post(
+    [authenticateUser, formidableMiddleware, validateCreateProjectInput],
+    createProject
+  );
 router.use('/:projectId', validateProjectIdParam);
 router
   .route('/:projectId')
   .get(getProject)
-  .patch(formidableMiddleware, updateProject)
-  .delete(deleteProject);
+  .patch([authenticateUser, formidableMiddleware], updateProject)
+  .delete(authenticateUser, deleteProject);
 
 export default router;
