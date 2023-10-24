@@ -58,18 +58,13 @@ export const validateLoginInput = withValidationErrors([
   body('password').notEmpty().withMessage('password is required'),
 ]);
 
-export const validateIdParam = withValidationErrors([
-  param('id').custom(async (value, { req }) => {
+export const validateProjectIdParam = withValidationErrors([
+  param('projectId').custom(async (value, { req }) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidId) throw new Error('invalid mongoDB id');
 
     const project = await ProjectModel.findById(value);
     if (!project) throw new Error(`no project with id ${value}`);
-
-    const isAdmin = req.user.role === 'admin';
-    const isOwner = req.user.userID === project.createdBy.toString();
-    if (!isAdmin && !isOwner)
-      throw new Error('not authorized to acces this route');
   }),
 ]);
 

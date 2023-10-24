@@ -8,7 +8,7 @@ import {
 } from '../controllers/projectController.js';
 import {
   validateCreateProjectInput,
-  validateIdParam,
+  validateProjectIdParam,
 } from '../middleware/validationMiddleware.js';
 import { formidableMiddleware } from '../middleware/formidableMiddleware.js';
 
@@ -18,10 +18,11 @@ router
   .route('/')
   .get(getAllProjects)
   .post([formidableMiddleware, validateCreateProjectInput], createProject);
+router.use('/:projectId', validateProjectIdParam);
 router
-  .route('/:id')
-  .get(validateIdParam, getProject)
-  .patch(validateIdParam, updateProject)
-  .delete(validateIdParam, deleteProject);
+  .route('/:projectId')
+  .get(getProject)
+  .patch(formidableMiddleware, updateProject)
+  .delete(deleteProject);
 
 export default router;

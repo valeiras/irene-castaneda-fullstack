@@ -13,7 +13,6 @@ export const formidableMiddleware = async (req, res, next) => {
       next(err);
       return;
     }
-    console.log(fields);
     for (const [key, value] of Object.entries(fields)) {
       req.body[key] = value[0];
     }
@@ -21,7 +20,6 @@ export const formidableMiddleware = async (req, res, next) => {
       req.body[key] = value[0];
     }
 
-    console.log(req.body);
     next();
   });
 };
