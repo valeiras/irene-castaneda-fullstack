@@ -7,7 +7,7 @@ import {
   updatePublication,
 } from '../controllers/publicationController.js';
 import {
-  validateCreatePublicationInput,
+  validatePublicationInput,
   validatePublicationIdParam,
 } from '../middleware/validationMiddleware.js';
 import { formidableMiddleware } from '../middleware/formidableMiddleware.js';
@@ -19,7 +19,7 @@ router
   .route('/')
   .get(getAllPublications)
   .post(
-    [authenticateUser, formidableMiddleware, validateCreatePublicationInput],
+    [authenticateUser, formidableMiddleware, validatePublicationInput],
     createPublication
   );
 router.use('/:publicationId', validatePublicationIdParam);

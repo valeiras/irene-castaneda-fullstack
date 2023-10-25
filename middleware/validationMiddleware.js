@@ -8,6 +8,9 @@ import mongoose from 'mongoose';
 import UserModel from '../models/UserModel.js';
 import ProjectModel from '../models/ProjectModel.js';
 import PublicationModel from '../models/PublicationModel.js';
+import TutoringModel from '../models/TutoringModel.js';
+import AuthorModel from '../models/AuthorModel.js';
+import { PUBLICATION_TYPES, STUDENT_TYPES } from '../utils/constants.js';
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -74,29 +77,70 @@ export const validateUpdateUserInput = withValidationErrors([
     .trim(),
 ]);
 
-export const validateCreateProjectInput = withValidationErrors([
+export const validateProjectInput = withValidationErrors([
   body('name').notEmpty().withMessage('name is required').trim(),
   body('description').notEmpty().withMessage('description is required').trim(),
   body('imageFile').notEmpty().withMessage('image file is required'),
 ]);
 
-export const validateCreatePublicationInput = withValidationErrors([
+export const validatePublicationInput = withValidationErrors([
   body('name').notEmpty().withMessage('name is required').trim(),
   body('year').notEmpty().withMessage('year is required'),
-  // body('authors').notEmpty().withMessage('authors are required'),
+  body('authors')
+    .notEmpty()
+    .withMessage('authors are required')
+    .custom(async (authors) => {
+      let areValidAuthorIds = true;
+      for (const authorId of authors) {
+        const isValidId = mongoose.Types.ObjectId.isValid(authorId);
+        if (!isValidId) {
+          areValidAuthorIds = false;
+          break;
+        }
+        const author = await AuthorModel.findById(authorId);
+        if (!author) {
+          areValidAuthorIds = false;
+          break;
+        }
+      }
+
+      if (!areValidAuthorIds)
+        throw Error('Some or all of the author IDs are not correct');
+    }),
+  body('publicationType')
+    .notEmpty()
+    .withMessage('publication type is required')
+    .isIn(Object.values(PUBLICATION_TYPES))
+    .withMessage('Invalid publication type'),
+
   body('publishedIn')
     .notEmpty()
     .withMessage('review or conference is required'),
+]);
+
+export const validateTutoringInput = withValidationErrors([
+  body('students').notEmpty().withMessage('students are required').trim(),
+  body('year').notEmpty().withMessage('year is required'),
+  body('description').notEmpty().withMessage('description is required'),
+  body('studentType')
+    .notEmpty()
+    .withMessage('student type is required')
+    .isIn(Object.values(STUDENT_TYPES))
+    .withMessage('Invalid student type'),
+]);
+
+export const validateAuthorInput = withValidationErrors([
+  body('name').notEmpty().withMessage('name is required').trim(),
 ]);
 
 const validateIdParam = (paramName, ObjectModel) => {
   return withValidationErrors([
     param(paramName).custom(async (value, { req }) => {
       const isValidId = mongoose.Types.ObjectId.isValid(value);
-      if (!isValidId) throw new Error('invalid mongoDB id');
+      if (!isValidId) throw Error('invalid mongoDB id');
 
       const project = await ObjectModel.findById(value);
-      if (!project) throw new Error(`no project with id ${value}`);
+      if (!project) throw Error(`no entry with id ${value}`);
     }),
   ]);
 };
@@ -110,3 +154,10 @@ export const validatePublicationIdParam = validateIdParam(
   'publicationId',
   PublicationModel
 );
+
+export const validateTutoringIdParam = validateIdParam(
+  'tutoringId',
+  TutoringModel
+);
+
+export const validateAuthorIdParam = validateIdParam('authorId', AuthorModel);

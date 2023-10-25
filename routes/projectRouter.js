@@ -7,7 +7,7 @@ import {
   updateProject,
 } from '../controllers/projectController.js';
 import {
-  validateCreateProjectInput,
+  validateProjectInput,
   validateProjectIdParam,
 } from '../middleware/validationMiddleware.js';
 import { formidableMiddleware } from '../middleware/formidableMiddleware.js';
@@ -19,7 +19,7 @@ router
   .route('/')
   .get(getAllProjects)
   .post(
-    [authenticateUser, formidableMiddleware, validateCreateProjectInput],
+    [authenticateUser, formidableMiddleware, validateProjectInput],
     createProject
   );
 router.use('/:projectId', validateProjectIdParam);

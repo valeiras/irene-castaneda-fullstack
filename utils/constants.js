@@ -4,3 +4,9 @@ export const PUBLICATION_TYPES = {
   ORAL_COMMUNICATION: 'oralCommunication',
   POSTER: 'poster',
 };
+
+export const STUDENT_TYPES = {
+  PHD: 'phd',
+  MASTER: 'master',
+  UNDERGRADUATE: 'undergraduate',
+};

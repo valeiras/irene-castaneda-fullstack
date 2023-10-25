@@ -7,20 +7,14 @@ export const getAllPublications = async (req, res) => {
 };
 
 export const createPublication = async (req, res) => {
-  let authors = [];
-  for (const [idx, author] of req.body.authors.entries()) {
-    authors.push({
-      name: author,
-      bold: req.body.bold[idx] === 'true' || false,
-    });
-  }
-
   let newPublicationData = {};
   for (const [key, value] of Object.entries(req.body)) {
-    newPublicationData[key] = value[0];
+    if (key === 'authors') {
+      newPublicationData[key] = value;
+    } else {
+      newPublicationData[key] = value[0];
+    }
   }
-  newPublicationData.authors = authors;
-
   const newPublication = await PublicationModel.create(newPublicationData);
 
   res
