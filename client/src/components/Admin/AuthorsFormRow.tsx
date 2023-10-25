@@ -8,7 +8,7 @@ const AuthorsFormRow: React.FC = () => {
   const {
     isDisabled,
     publication: { authorIds },
-    setIsModalVisible,
+    setIsAddAuthorModalVisible,
   } = usePublicationEditorContext();
 
   return (
@@ -36,10 +36,11 @@ const AuthorsFormRow: React.FC = () => {
           );
         })}
         <button
+          type="button"
           className="invisible-btn"
           disabled={isDisabled}
           onClick={() => {
-            setIsModalVisible(true);
+            setIsAddAuthorModalVisible(true);
           }}
         >
           {isDisabled ? <BsPlusCircleDotted /> : <BsPlusCircle />}

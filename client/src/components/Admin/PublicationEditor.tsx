@@ -6,7 +6,7 @@ import { useState, createContext, useContext } from 'react';
 
 import {
   AuthorsFormRow,
-  NewAuthorModal,
+  AddAuthorModal,
   ButtonStrip,
   JournalInfoFormRow,
 } from './';
@@ -15,8 +15,8 @@ import { Form } from 'react-router-dom';
 interface IContext {
   isDisabled: boolean;
   setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
-  isModalVisible: boolean;
-  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  isAddAuthorModalVisible: boolean;
+  setIsAddAuthorModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   resetIdx: number;
   setResetIdx: React.Dispatch<React.SetStateAction<number>>;
   publication: IPublication;
@@ -26,7 +26,7 @@ const PublicationEditor: React.FC<{ publication: IPublication }> = ({
   publication,
 }) => {
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAddAuthorModalVisible, setIsAddAuthorModalVisible] = useState(false);
 
   // We use this state as the key for the form, forcing React to re-render it when we want to reset it, by increasing this index
   const [resetIdx, setResetIdx] = useState(0);
@@ -36,15 +36,15 @@ const PublicationEditor: React.FC<{ publication: IPublication }> = ({
       value={{
         isDisabled,
         setIsDisabled,
-        isModalVisible,
-        setIsModalVisible,
+        isAddAuthorModalVisible,
+        setIsAddAuthorModalVisible,
         resetIdx,
         setResetIdx,
         publication,
       }}
     >
       <Wrapper>
-        <NewAuthorModal />
+        <AddAuthorModal />
         <Form className="editor-form" key={resetIdx}>
           <FullLineFormRow
             name="title"

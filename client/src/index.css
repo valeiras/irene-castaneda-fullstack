@@ -399,7 +399,11 @@ Editor form
 .editor-form-input,
 .editor-form-select,
 .editor-form-btn {
-  height: 35px;
+  height: 2rem;
+}
+
+.editor-form-input[type='checkbox'] {
+  height: 1rem;
 }
 
 .editor-form-input:disabled,
@@ -423,7 +427,9 @@ Editor form
 .flex-editor-form-row {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+  row-gap: 0.5rem;
 }
 /* 
 ========

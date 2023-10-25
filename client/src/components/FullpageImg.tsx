@@ -1,34 +1,34 @@
-import { HIDE_MODAL } from '../assets/ts/actionTypes';
+import { HIDE_FULLPAGE_IMG } from '../assets/ts/actionTypes';
 import { FaTimes } from 'react-icons/fa';
 import useGlobalContext from '../hooks/useGlobalContext';
 import styled from 'styled-components';
 
-const Modal = () => {
+const FullpageImg = () => {
   const {
-    globalState: { showModal, currImg, currDescription },
+    globalState: { showFullpageImg, currImg, currDescription },
     dispatch,
   } = useGlobalContext();
 
-  if (!showModal) return null;
+  if (!showFullpageImg) return null;
   return (
-    <Wrapper className="Modal" style={{ top: window.scrollY }}>
+    <Wrapper className="FullpageImg" style={{ top: window.scrollY }}>
       <div
-        className="modal-img-container"
+        className="fullpage-img-container"
         style={{ backgroundImage: `url(${currImg})` }}
       ></div>
       <FaTimes
-        className="close-modal-btn"
+        className="close-fullpage-img-btn"
         onClick={() => {
-          dispatch({ type: HIDE_MODAL, payload: {} });
+          dispatch({ type: HIDE_FULLPAGE_IMG, payload: {} });
         }}
       />
       <div className="block-container">
-        <p className="modal-description">{currDescription}</p>
+        <p className="fullpage-img-description">{currDescription}</p>
       </div>
     </Wrapper>
   );
 };
-export default Modal;
+export default FullpageImg;
 
 const Wrapper = styled.div`
   position: absolute;
@@ -49,7 +49,7 @@ const Wrapper = styled.div`
     }
   }
 
-  .modal-img-container {
+  .fullpage-img-container {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -61,7 +61,7 @@ const Wrapper = styled.div`
     z-index: -1;
   }
 
-  .close-modal-btn {
+  .close-fullpage-img-btn {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -71,11 +71,11 @@ const Wrapper = styled.div`
     transition: var(--transition);
   }
 
-  .close-modal-btn:hover {
+  .close-fullpage-img-btn:hover {
     scale: 1.02;
   }
 
-  .modal-description {
+  .fullpage-img-description {
     font-size: 1.4rem;
     color: var(--grey-50);
     font-weight: 200;

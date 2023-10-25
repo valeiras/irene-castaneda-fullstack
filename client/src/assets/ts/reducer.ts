@@ -4,8 +4,8 @@ import {
   SET_DARK_MODE,
   TOGGLE_SHOW_LINKS,
   SET_SHOW_LINKS,
-  HIDE_MODAL,
-  SHOW_MODAL,
+  HIDE_FULLPAGE_IMG,
+  SHOW_FULLPAGE_IMG,
 } from './actionTypes';
 
 const reducer = (state: IGlobalState, action: StateActions): IGlobalState => {
@@ -30,11 +30,11 @@ const reducer = (state: IGlobalState, action: StateActions): IGlobalState => {
         return { ...state };
       }
       break;
-    case HIDE_MODAL:
+    case HIDE_FULLPAGE_IMG:
       document.body.style.overflow = 'auto';
-      return { ...state, showModal: false };
+      return { ...state, showFullpageImg: false };
       break;
-    case SHOW_MODAL:
+    case SHOW_FULLPAGE_IMG:
       if (
         typeof action.payload === 'object' &&
         Object.prototype.hasOwnProperty.call(action.payload, 'img') &&
@@ -43,7 +43,7 @@ const reducer = (state: IGlobalState, action: StateActions): IGlobalState => {
         document.body.style.overflow = 'hidden';
         return {
           ...state,
-          showModal: true,
+          showFullpageImg: true,
           currImg: action.payload.img,
           currDescription: action.payload.description,
         };

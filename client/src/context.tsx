@@ -5,7 +5,7 @@ import reducer from './assets/ts/reducer';
 const initialState: IGlobalState = {
   isDarkMode: false,
   showLinks: false,
-  showModal: false,
+  showFullpageImg: false,
   currImg: '',
   currDescription: '',
 };

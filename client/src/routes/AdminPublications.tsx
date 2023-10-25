@@ -11,6 +11,7 @@ import {
   IPublication,
   IFetchAuthors,
 } from '../utils/Interfaces';
+import { ACTION_INTENTS } from '../utils/constants';
 
 export const loader = async () => {
   try {
@@ -30,6 +31,19 @@ export const loader = async () => {
   } catch (error) {
     return error;
   }
+};
+
+export const action = async ({ request }: { request: Request }) => {
+  const formData = await request.formData();
+  const intent = formData.get('intent');
+
+  if (intent === ACTION_INTENTS.CREATE_NEW_AUTHOR) {
+    const newAuthor = await customFetch.post('/authors', formData);
+    console.log(newAuthor);
+
+    return newAuthor;
+  }
+  return formData;
 };
 
 const AdminPublications: React.FC = () => {

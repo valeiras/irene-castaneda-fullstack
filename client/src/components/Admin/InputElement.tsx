@@ -2,21 +2,31 @@ import styled from 'styled-components';
 
 export const InputElement: React.FC<{
   name: string;
-  defaultValue: string;
   label: string;
-  isDisabled: boolean;
-}> = ({ name, defaultValue, label, isDisabled }) => {
+  defaultValue?: string;
+  isRequired?: boolean;
+  isDisabled?: boolean;
+  type?: string;
+}> = ({
+  name,
+  label,
+  defaultValue = '',
+  isRequired = false,
+  isDisabled = false,
+  type = 'text',
+}) => {
   return (
     <Wrapper className="InputElement">
       <label htmlFor={name} className="editor-form-label">
         {label}:
       </label>
       <input
-        type="text"
+        type={type}
         name={name}
         defaultValue={defaultValue}
         className="editor-form-input"
         disabled={isDisabled}
+        required={isRequired}
       />
     </Wrapper>
   );
@@ -24,6 +34,6 @@ export const InputElement: React.FC<{
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: var(--label-width) 6rem;
+  grid-template-columns: var(--label-width) 8rem;
   align-items: center;
 `;

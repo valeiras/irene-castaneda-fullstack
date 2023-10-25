@@ -1,25 +1,11 @@
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 
-const ConfirmationModal: React.FC<{
-  message: string;
-  acceptTag: string;
-  rejectTag: string;
-  onAccept: () => void;
-  onReject: () => void;
+const Modal: React.FC<{
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({
-  message,
-  acceptTag,
-  rejectTag,
-  onAccept,
-  onReject = () => {
-    setIsVisible(false);
-  },
-  isVisible,
-  setIsVisible,
-}) => {
+  children: JSX.Element;
+}> = ({ isVisible, setIsVisible, children }) => {
   const closeModal = () => {
     const scrollY = document.body.style.top;
     document.body.style.position = '';
@@ -30,18 +16,10 @@ const ConfirmationModal: React.FC<{
 
   if (isVisible) {
     return (
-      <Wrapper className="ConfirmationModal" style={{ top: 0 }}>
+      <Wrapper className="Modal" style={{ top: 0 }}>
         <div className="modal-content">
           <FaTimes className="close-modal-btn" onClick={closeModal} />
-          <h3>{message}</h3>
-          <div className="buttons">
-            <button onClick={onAccept} className="btn">
-              {acceptTag}
-            </button>
-            <button className="btn" onClick={onReject}>
-              {rejectTag}
-            </button>
-          </div>
+          {children}
         </div>
       </Wrapper>
     );
@@ -49,7 +27,7 @@ const ConfirmationModal: React.FC<{
     return null;
   }
 };
-export default ConfirmationModal;
+export default Modal;
 
 const Wrapper = styled.div`
   --modal-width-mobile: 90vw;
@@ -75,7 +53,7 @@ const Wrapper = styled.div`
   background-color: #0f0f0fe6;
   width: 100vw;
   height: 100vh;
-  animation: fade-in 0.3s ease-in-out;
+  //animation: fade-in 0.3s ease-in-out;
 
   .modal-content {
     min-height: var(--modal-height-mobile);
@@ -88,10 +66,11 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
+    padding: 1rem;
     border-radius: var(--border-radius);
     gap: 1rem;
     background-color: var(--grey-100);
+    position: relative;
   }
 
   .close-modal-btn {
@@ -99,15 +78,13 @@ const Wrapper = styled.div`
     cursor: pointer;
     transition: var(--transition);
     margin-left: auto;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
   }
 
   .close-modal-btn:hover {
     scale: 1.02;
-  }
-
-  .btn {
-    min-width: 3rem;
-    margin: 1rem;
   }
 
   @media screen and (min-width: 992px) {

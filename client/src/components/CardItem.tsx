@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SHOW_MODAL } from '../assets/ts/actionTypes';
+import { SHOW_FULLPAGE_IMG } from '../assets/ts/actionTypes';
 import useGlobalContext from '../hooks/useGlobalContext';
 
 const CardItem: React.FC<{
@@ -12,7 +12,7 @@ const CardItem: React.FC<{
     <Wrapper
       className="CardItem"
       onClick={() => {
-        dispatch({ type: SHOW_MODAL, payload: { img, description } });
+        dispatch({ type: SHOW_FULLPAGE_IMG, payload: { img, description } });
       }}
     >
       <div

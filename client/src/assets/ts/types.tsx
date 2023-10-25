@@ -1,10 +1,14 @@
 import { Dispatch, ReactNode } from 'react';
-import { TOGGLE_DARK_MODE, SET_DARK_MODE, SHOW_MODAL } from './actionTypes';
+import {
+  TOGGLE_DARK_MODE,
+  SET_DARK_MODE,
+  SHOW_FULLPAGE_IMG,
+} from './actionTypes';
 
 export interface IGlobalState {
   isDarkMode: boolean;
   showLinks: boolean;
-  showModal: boolean;
+  showFullpageImg: boolean;
   currImg: string;
   currDescription: string;
 }
@@ -19,8 +23,8 @@ export interface ISetBooleanValue {
   payload: boolean;
 }
 
-export interface ISetModal {
-  type: typeof SHOW_MODAL;
+export interface ISetFullpageImg {
+  type: typeof SHOW_FULLPAGE_IMG;
   payload: { img: string; description: string };
 }
 
@@ -43,7 +47,10 @@ export interface IProject {
   description: string;
 }
 
-export type StateActions = IToggleBooleanValue | ISetBooleanValue | ISetModal;
+export type StateActions =
+  | IToggleBooleanValue
+  | ISetBooleanValue
+  | ISetFullpageImg;
 
 export type ContextType = {
   globalState: IGlobalState;
