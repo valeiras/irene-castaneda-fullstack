@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import {
   emailLink,
   googleScholarLink,
@@ -13,17 +14,33 @@ const Fullpage: React.FC<{
   heroClass?: string;
 }> = ({ children, heroClass = 'hero-container space-evenly' }) => {
   return (
-    <div className="fullpage-container">
+    <Wrapper className="Fullpage">
       <div className={heroClass}>{children}</div>
       <div className="full-line-container">
-        <div></div>
+        <div />
         <ContactLinks
           links={[orcidLink, googleScholarLink, twitterLink, emailLink]}
           hasName={false}
         />
         <ThemeToggle />
       </div>
-    </div>
+    </Wrapper>
   );
 };
 export default Fullpage;
+const Wrapper = styled.div`
+  width: 100%;
+  min-height: calc(100dvh - var(--height-navbar));
+  padding: 0 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .full-line-container {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 2rem;
+  }
+`;

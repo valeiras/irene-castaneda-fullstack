@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import {
   emailLink,
   googleScholarLink,
@@ -6,7 +7,7 @@ import {
 
 const Publications: React.FC = () => {
   return (
-    <div className="subsection-container">
+    <Wrapper className="Publications subsection-container">
       <h2 className="title">Publications:</h2>
       <div className="block-container">
         <p className="high-line">
@@ -42,7 +43,23 @@ const Publications: React.FC = () => {
           for copies of papers.
         </p>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 export default Publications;
+const Wrapper = styled.div`
+  .text-link {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s ease-in-out;
+  }
+
+  .text-link:hover {
+    text-decoration-color: inherit;
+  }
+
+  .high-line {
+    line-height: 2;
+  }
+`;

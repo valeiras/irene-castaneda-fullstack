@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { IContactLink } from '../assets/ts/types';
 
 const ContactLinks: React.FC<{ links: IContactLink[]; hasName: boolean }> = ({
@@ -5,7 +6,7 @@ const ContactLinks: React.FC<{ links: IContactLink[]; hasName: boolean }> = ({
   hasName = false,
 }) => {
   return (
-    <div className="contact-links-container">
+    <Wrapper className="ContactLinks">
       {links.map(({ name, url, icon, id }) => {
         return (
           <div className="single-link" key={id}>
@@ -21,7 +22,31 @@ const ContactLinks: React.FC<{ links: IContactLink[]; hasName: boolean }> = ({
           </div>
         );
       })}
-    </div>
+    </Wrapper>
   );
 };
 export default ContactLinks;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-items: center;
+  align-items: flex-start;
+  font-size: 1.2rem;
+
+  .single-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .link-icon {
+    font-size: 1.5rem;
+    transition: var(--transform-transition);
+  }
+
+  .link-icon:hover {
+    transform: scale(1.05);
+  }
+`;

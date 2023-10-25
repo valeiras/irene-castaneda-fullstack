@@ -6,7 +6,7 @@ import {
 
 const Research: React.FC = () => {
   return (
-    <Fullpage>
+    <Fullpage heroClass="hero-container center-content">
       <ResearchProjects />
       <Publications />
     </Fullpage>

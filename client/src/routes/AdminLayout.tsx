@@ -1,15 +1,16 @@
-import { Navbar } from '../components/';
+import { Navbar } from '../components';
 import { Outlet } from 'react-router-dom';
 import Modal from '../components/Modal';
+import { adminSections } from '../data/sections';
 
-const Root: React.FC = () => {
+const AdminLayout: React.FC = () => {
   return (
     <main>
-      <Navbar />
+      <Navbar sections={adminSections} />
       <div className="navbar-spacer"></div>
       <Outlet />
       <Modal />
     </main>
   );
 };
-export default Root;
+export default AdminLayout;
