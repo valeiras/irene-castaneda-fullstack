@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 import { PUBLICATION_TYPES } from '../utils/constants.js';
 
 const PublicationSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  year: { type: Number, required: true },
-  authors: { type: [mongoose.Types.ObjectId], ref: 'Author', required: true },
-  publishedIn: { type: String, required: true },
+  title: { type: String, required: true },
+  year: { type: String, required: true },
+  authorIds: { type: [mongoose.Types.ObjectId], ref: 'Author', required: true },
+  journal: { type: String, required: true },
   pages: { type: String, required: false },
   link: { type: String, required: false },
   publicationType: {

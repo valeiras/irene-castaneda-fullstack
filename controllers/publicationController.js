@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import PublicationModel from '../models/PublicationModel.js';
+import { PUBLICATION_TYPES, typesToLabels } from '../utils/constants.js';
 
 export const getAllPublications = async (req, res) => {
   const publications = await PublicationModel.find();
@@ -61,4 +62,11 @@ export const updatePublication = async (req, res) => {
   res
     .status(StatusCodes.OK)
     .json({ msg: 'publication updated', updatedPublication });
+};
+
+export const getPublicationTypes = (req, res) => {
+  const publicationTypes = Object.values(PUBLICATION_TYPES).map((type) => {
+    return { type, label: typesToLabels[type] };
+  });
+  res.status(StatusCodes.OK).json({ publicationTypes });
 };

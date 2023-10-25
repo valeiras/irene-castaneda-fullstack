@@ -51,6 +51,7 @@ html {
   --container-big-width: 60vw;
   --container-small-width: 30vw;
   --fade-time: 1s;
+  --border-radius: 3px;
 
   --grid-gap: 2rem;
   --hero-gap: 2rem;
@@ -91,6 +92,8 @@ html {
   --dark-mode-text-color: var(--grey-50);
   --dark-mode-text-color-hover: var(--grey-200);
   --dark-mode-navbar-bg-color: var(--grey-900);
+
+  --label-width: 4.2rem;
 }
 
 .dark-mode {
@@ -136,7 +139,7 @@ h5 {
 }
 
 h3 {
-  font-size: 1.953rem;
+  font-size: 1.7rem;
 }
 
 h4 {
@@ -173,7 +176,7 @@ ul {
   width: 100%;
   display: block;
   object-fit: cover;
-  border-radius: 3px;
+  border-radius: var(--border-radius);
 }
 /* buttons */
 
@@ -183,11 +186,12 @@ ul {
   color: var(--white);
   background: var(--grey-300);
   border: transparent;
-  border-radius: 3px;
+  border-radius: var(--border-radius);
   box-shadow: var(--shadow-1);
   transition: var(--transition);
+  font-family: inherit;
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: capitalize;
   padding: 0.2rem 1rem;
   display: inline-block;
   width: fit-content;
@@ -203,6 +207,22 @@ ul {
   width: 100%;
 }
 
+.invisible-btn {
+  border: transparent;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  color: inherit;
+  font-weight: 100;
+  margin: 0 1rem;
+}
+
+.invisible-btn:disabled {
+  cursor: default;
+}
 /* alerts */
 .alert {
   padding: 0.375rem 0.75rem;
@@ -292,12 +312,6 @@ Subsections
 
 /* 
 ========
-Publications
-========
-*/
-
-/* 
-========
 Form
 ========
 */
@@ -345,6 +359,72 @@ Form
   text-transform: capitalize;
 }
 
+/* 
+========
+Editor form
+========
+*/
+.editor-form {
+  background: var(--grey-100);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-2);
+  padding: 1rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editor-form-row {
+}
+
+.editor-form-label {
+  text-transform: capitalize;
+  line-height: 1.5;
+}
+
+.editor-form-input,
+.editor-form-textarea,
+.editor-form-select {
+  padding: 0.375rem 0.75rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--grey-400);
+  outline: none;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 300;
+  margin: 0;
+}
+.editor-form-input,
+.editor-form-select,
+.editor-form-btn {
+  height: 35px;
+}
+
+.editor-form-input:disabled,
+.editor-form-textarea:disabled,
+.editor-form-select:disabled {
+  background-color: var(--grey-100);
+  color: var(--grey-700);
+}
+
+.editor-form-textarea {
+  height: 7rem;
+}
+
+.full-line-editor-form-row {
+  display: grid;
+  grid-template-columns: var(--label-width) 1fr;
+  align-items: center;
+  align-content: center;
+}
+
+.flex-editor-form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
 /* 
 ========
 Hero container

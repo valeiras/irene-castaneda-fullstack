@@ -16,8 +16,6 @@ const Navbar: React.FC<{ sections: ISection[] }> = ({ sections }) => {
     dispatch,
   } = useGlobalContext();
 
-  console.log(isDarkMode);
-
   return (
     <Wrapper className="Navbar">
       <div className="nav-center">

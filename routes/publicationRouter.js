@@ -5,6 +5,7 @@ import {
   getPublication,
   deletePublication,
   updatePublication,
+  getPublicationTypes,
 } from '../controllers/publicationController.js';
 import {
   validatePublicationInput,
@@ -22,6 +23,7 @@ router
     [authenticateUser, formidableMiddleware, validatePublicationInput],
     createPublication
   );
+router.route('/types').get(getPublicationTypes);
 router.use('/:publicationId', validatePublicationIdParam);
 router
   .route('/:publicationId')

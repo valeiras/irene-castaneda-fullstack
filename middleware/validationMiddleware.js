@@ -84,11 +84,11 @@ export const validateProjectInput = withValidationErrors([
 ]);
 
 export const validatePublicationInput = withValidationErrors([
-  body('name').notEmpty().withMessage('name is required').trim(),
+  body('title').notEmpty().withMessage('title is required').trim(),
   body('year').notEmpty().withMessage('year is required'),
-  body('authors')
+  body('authorIds')
     .notEmpty()
-    .withMessage('authors are required')
+    .withMessage('author IDs are required')
     .custom(async (authors) => {
       let areValidAuthorIds = true;
       for (const authorId of authors) {
@@ -113,9 +113,7 @@ export const validatePublicationInput = withValidationErrors([
     .isIn(Object.values(PUBLICATION_TYPES))
     .withMessage('Invalid publication type'),
 
-  body('publishedIn')
-    .notEmpty()
-    .withMessage('review or conference is required'),
+  body('journal').notEmpty().withMessage('journal is required'),
 ]);
 
 export const validateTutoringInput = withValidationErrors([

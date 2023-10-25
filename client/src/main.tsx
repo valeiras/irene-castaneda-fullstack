@@ -25,6 +25,7 @@ import {
 } from './routes';
 
 import { action as loginAction } from './routes/Login';
+import { loader as publicationsLoader } from './routes/AdminPublications';
 
 export const routes = [
   {
@@ -51,7 +52,11 @@ export const routes = [
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <AdminHome /> },
-      { path: 'publications', element: <AdminPublications /> },
+      {
+        path: 'publications',
+        element: <AdminPublications />,
+        loader: publicationsLoader,
+      },
       { path: 'projects', element: <AdminProjects /> },
       { path: 'tutoring', element: <AdminTutoring /> },
     ],
