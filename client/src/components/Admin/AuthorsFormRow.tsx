@@ -7,12 +7,19 @@ import { useQuery } from '@tanstack/react-query';
 
 const AuthorsFormRow: React.FC = () => {
   const { data: allAuthors } = useQuery(authorsQuery);
-  const { isDisabled, tempAuthorIds, setIsAddAuthorModalVisible } =
+  const { isEditDisabled, tempAuthorIds, setTempAuthorIds } =
     usePublicationEditorContext();
 
   if (!allAuthors) {
     return <Wrapper>Loading...</Wrapper>;
   }
+
+  const insertExistingAuthor = () => {
+    if (allAuthors) {
+      tempAuthorIds.push(allAuthors[0]._id);
+      setTempAuthorIds([...tempAuthorIds]);
+    }
+  };
 
   return (
     <Wrapper className="AuthorsFormRow full-line-editor-form-row">
@@ -20,20 +27,28 @@ const AuthorsFormRow: React.FC = () => {
         Authors:
       </label>
       <div className="authors-container">
-        {tempAuthorIds.map((authorId) => {
+        {tempAuthorIds.map((authorId, idx) => {
           const currAuthor = allAuthors.find(({ _id }) => {
             return _id === authorId;
           });
           return (
             <select
-              name="author[]"
+              name="authorIds"
               key={nanoid()}
-              defaultValue={currAuthor?.name || ''}
+              defaultValue={currAuthor?._id || ''}
               className="editor-form-select"
-              disabled={isDisabled}
+              disabled={isEditDisabled}
+              onChange={(evt) => {
+                tempAuthorIds[idx] = evt.target.value;
+                setTempAuthorIds(tempAuthorIds);
+              }}
             >
               {allAuthors.map((author) => {
-                return <option key={author._id}>{author.name}</option>;
+                return (
+                  <option key={author._id} value={author._id}>
+                    {author.name}
+                  </option>
+                );
               })}
             </select>
           );
@@ -41,12 +56,10 @@ const AuthorsFormRow: React.FC = () => {
         <button
           type="button"
           className="invisible-btn"
-          disabled={isDisabled}
-          onClick={() => {
-            setIsAddAuthorModalVisible(true);
-          }}
+          disabled={isEditDisabled}
+          onClick={insertExistingAuthor}
         >
-          {isDisabled ? <BsPlusCircleDotted /> : <BsPlusCircle />}
+          {isEditDisabled ? <BsPlusCircleDotted /> : <BsPlusCircle />}
         </button>
       </div>
     </Wrapper>

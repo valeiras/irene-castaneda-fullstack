@@ -5,14 +5,14 @@ const InputElement: React.FC<{
   label: string;
   defaultValue?: string;
   isRequired?: boolean;
-  isDisabled?: boolean;
+  isEditDisabled?: boolean;
   type?: string;
 }> = ({
   name,
   label,
   defaultValue = '',
   isRequired = false,
-  isDisabled = false,
+  isEditDisabled = false,
   type = 'text',
 }) => {
   return (
@@ -25,7 +25,7 @@ const InputElement: React.FC<{
         name={name}
         defaultValue={defaultValue}
         className="editor-form-input"
-        disabled={isDisabled}
+        disabled={isEditDisabled}
         required={isRequired}
       />
     </Wrapper>

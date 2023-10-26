@@ -8,10 +8,8 @@ export const getAllPublications = async (req, res) => {
 };
 
 export const createPublication = async (req, res) => {
-  console.log(req.body);
   let newPublicationData = {};
   for (const [key, value] of Object.entries(req.body)) {
-    console.log(key, value);
     if (key === 'authors') {
       newPublicationData[key] = value;
     } else {
@@ -43,19 +41,14 @@ export const deletePublication = async (req, res) => {
 export const updatePublication = async (req, res) => {
   let newPublicationData = {};
   for (const [key, value] of Object.entries(req.body)) {
-    newPublicationData[key] = value[0];
+    if (key === 'authorIds') {
+      newPublicationData[key] = value;
+    } else {
+      newPublicationData[key] = value[0];
+    }
   }
 
-  if (req.body.authors) {
-    let authors = [];
-    for (const [idx, author] of req.body.authors.entries()) {
-      authors.push({
-        name: author,
-        bold: req.body.bold[idx] === 'true' || false,
-      });
-    }
-    newPublicationData.authors = authors;
-  }
+  console.log(newPublicationData);
 
   const updatedPublication = await PublicationModel.findByIdAndUpdate(
     req.params.publicationId,

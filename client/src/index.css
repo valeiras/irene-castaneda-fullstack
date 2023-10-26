@@ -198,9 +198,15 @@ ul {
   min-width: 10rem;
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
   box-shadow: var(--shadow-3);
   background: var(--grey-400);
+}
+
+.btn:disabled {
+  cursor: default;
+  background: var(--grey-200);
+  color: var(--grey-500);
 }
 
 .btn-block {
@@ -246,7 +252,8 @@ ul {
 }
 
 .loading,
-.small-loading {
+.small-loading,
+.very-small-loading {
   border: 5px solid var(--grey-400);
   border-radius: 50%;
   border-top-color: var(--primary-500);

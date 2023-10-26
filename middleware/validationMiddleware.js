@@ -88,7 +88,7 @@ export const validatePublicationInput = withValidationErrors([
   body('year').notEmpty().withMessage('year is required'),
   body('authorIds')
     .notEmpty()
-    .withMessage('author IDs are required')
+    .withMessage('authorIds are required')
     .custom(async (authors) => {
       let areValidAuthorIds = true;
       for (const authorId of authors) {

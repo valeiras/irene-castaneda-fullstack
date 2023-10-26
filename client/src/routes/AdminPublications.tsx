@@ -1,8 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import styled from 'styled-components';
-import { Outlet } from 'react-router-dom';
 import { ActionFunctionReturn } from '../utils/types';
-import { PublicationEditor } from '../components/Admin';
+import { AdminPublicationType } from '../components/Admin';
 import type { QueryClient } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -10,6 +9,10 @@ import {
   publicationTypesQuery,
   authorsQuery,
 } from '../utils/queries';
+import customFetch from '../utils/customFetch';
+import { toast } from 'react-toastify';
+import displayAxiosError from '../utils/displayAxiosError';
+import { Outlet } from 'react-router-dom';
 
 type LoaderFunctionReturn = () => Promise<unknown>;
 export const loader: (queryClient: QueryClient) => LoaderFunctionReturn = (
@@ -20,9 +23,9 @@ export const loader: (queryClient: QueryClient) => LoaderFunctionReturn = (
       await queryClient.ensureQueryData(publicationsQuery);
       await queryClient.ensureQueryData(publicationTypesQuery);
       await queryClient.ensureQueryData(authorsQuery);
-
       return 'ok';
     } catch (error) {
+      displayAxiosError(error);
       return error;
     }
   };
@@ -33,10 +36,49 @@ export const action: (queryClient: QueryClient) => ActionFunctionReturn = (
 ) => {
   return async ({ request }: { request: Request }) => {
     const formData = await request.formData();
+    if (request.method === 'PATCH') {
+      return await updatePublication(formData, queryClient);
+    } else if (request.method === 'POST') {
+      return await createNewPublication(formData, queryClient);
+    }
+  };
+};
+
+const updatePublication = async (
+  formData: FormData,
+  queryClient: QueryClient
+) => {
+  console.log(formData.getAll('authorIds'));
+  console.log(formData.get('test'));
+
+  try {
+    await customFetch.patch(
+      `/publications/${formData.get('publicationId')}`,
+      formData
+    );
 
     await queryClient.invalidateQueries({ queryKey: ['publications'] });
+    toast.success('Publication updated successfully!');
     return null;
-  };
+  } catch (error) {
+    displayAxiosError(error);
+    return error;
+  }
+};
+
+const createNewPublication = async (
+  formData: FormData,
+  queryClient: QueryClient
+) => {
+  try {
+    await customFetch.post(`/publications`, formData);
+    await queryClient.invalidateQueries({ queryKey: ['publications'] });
+    toast.success('Publication created successfully!');
+    return null;
+  } catch (error) {
+    displayAxiosError(error);
+    return error;
+  }
 };
 
 const AdminPublications: React.FC = () => {
@@ -55,21 +97,17 @@ const AdminPublications: React.FC = () => {
           const publicationsCurrentType = publications.filter((pub) => {
             return pub.publicationType === type;
           });
-
           return (
-            <div key={type} className="publication-type-container">
-              <h3>{label}:</h3>
-              {publicationsCurrentType?.map((pub) => {
-                return (
-                  <PublicationEditor publication={pub} key={pub._id}>
-                    <Outlet />
-                  </PublicationEditor>
-                );
-              })}
-            </div>
+            <AdminPublicationType
+              key={type}
+              type={type}
+              label={label}
+              publications={publicationsCurrentType}
+            />
           );
         })}
       </div>
+      <Outlet />
     </Wrapper>
   );
 };
@@ -83,13 +121,5 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-
-  .publication-type-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    border: 1px solid blue;
   }
 `;

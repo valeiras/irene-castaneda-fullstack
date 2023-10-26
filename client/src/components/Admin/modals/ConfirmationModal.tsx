@@ -26,10 +26,10 @@ const ConfirmationModal: React.FC<{
         <Wrapper>
           <h3>{message}</h3>
           <div className="buttons">
-            <button onClick={onAccept} className="btn">
+            <button onClick={onAccept} className="btn" type="button">
               {acceptTag}
             </button>
-            <button className="btn" onClick={onReject}>
+            <button className="btn" onClick={onReject} type="button">
               {rejectTag}
             </button>
           </div>

@@ -4,7 +4,6 @@ import { redirect, useNavigate } from 'react-router-dom';
 import customFetch from '../utils/customFetch';
 import { Form } from 'react-router-dom';
 import { Modal, InputElement } from '../components/Admin';
-import { usePublicationEditorContext } from '../components/Admin/PublicationEditor';
 import { QueryClient } from '@tanstack/react-query';
 import { ActionFunctionReturn } from '../utils/types';
 
@@ -21,12 +20,10 @@ export const action: (queryClient: QueryClient) => ActionFunctionReturn = (
 
 const NewAuthorPage = () => {
   const navigate = useNavigate();
-  const { setHasNewAuthor } = usePublicationEditorContext();
 
   return (
     <Modal
       onCrossButtonClick={() => {
-        setHasNewAuthor(false);
         navigate('..');
       }}
     >

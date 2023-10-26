@@ -5,6 +5,7 @@ export interface IPublication {
   journal: string;
   pages?: string;
   link?: string;
+  isNew?: boolean;
   publicationType: string;
   _id: string;
 }

@@ -5,27 +5,27 @@ import { usePublicationEditorContext } from './PublicationEditor';
 const JournalInfoFormRow: React.FC<{
   publication: IPublication;
 }> = ({ publication }) => {
-  const { isDisabled } = usePublicationEditorContext();
+  const { isEditDisabled } = usePublicationEditorContext();
 
   return (
     <div className="flex-editor-form-row">
       <InputElement
         name="year"
         defaultValue={publication.year}
-        isDisabled={isDisabled}
+        isEditDisabled={isEditDisabled}
         label="year"
       />
       <InputElement
         name="pages"
         defaultValue={publication.pages || ''}
-        isDisabled={isDisabled}
+        isEditDisabled={isEditDisabled}
         label="pages"
       />
       <InputElement
-        name="year"
-        defaultValue={publication.year}
-        isDisabled={isDisabled}
-        label="year"
+        name="link"
+        defaultValue={publication.link}
+        isEditDisabled={isEditDisabled}
+        label="link"
       />
     </div>
   );

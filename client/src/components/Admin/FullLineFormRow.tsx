@@ -5,7 +5,7 @@ const FullLineFormRow: React.FC<{
   defaultValue: string;
   label: string;
 }> = ({ name, defaultValue, label }) => {
-  const { isDisabled } = usePublicationEditorContext();
+  const { isEditDisabled } = usePublicationEditorContext();
   return (
     <div className="full-line-editor-form-row">
       <label htmlFor={name} className="editor-form-label">
@@ -16,7 +16,7 @@ const FullLineFormRow: React.FC<{
         name={name}
         defaultValue={defaultValue}
         className="editor-form-input"
-        disabled={isDisabled}
+        disabled={isEditDisabled}
       />
     </div>
   );
