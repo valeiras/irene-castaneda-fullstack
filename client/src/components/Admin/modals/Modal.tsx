@@ -2,23 +2,33 @@ import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 
 const Modal: React.FC<{
-  isVisible: boolean;
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  children: JSX.Element;
-}> = ({ isVisible, setIsVisible, children }) => {
-  const closeModal = () => {
-    const scrollY = document.body.style.top;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    setIsVisible(false);
-  };
+  isVisible?: boolean;
+  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>> | null;
+  children: React.ReactNode;
+  onCrossButtonClick?: () => void | null;
+}> = ({
+  isVisible = true,
+  setIsVisible = null,
+  children,
+  onCrossButtonClick = null,
+}) => {
+  if (onCrossButtonClick === null) {
+    onCrossButtonClick = () => {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      if (setIsVisible !== null) {
+        setIsVisible(false);
+      }
+    };
+  }
 
   if (isVisible) {
     return (
       <Wrapper className="Modal" style={{ top: 0 }}>
         <div className="modal-content">
-          <FaTimes className="close-modal-btn" onClick={closeModal} />
+          <FaTimes className="close-modal-btn" onClick={onCrossButtonClick} />
           {children}
         </div>
       </Wrapper>
@@ -32,7 +42,7 @@ export default Modal;
 const Wrapper = styled.div`
   --modal-width-mobile: 90vw;
   --modal-height-mobile: 30vh;
-  --modal-width-laptop: 30vw;
+  --modal-width-laptop: 40vw;
   --modal-height-laptop: 20vh;
 
   @keyframes fade-in {
@@ -53,11 +63,10 @@ const Wrapper = styled.div`
   background-color: #0f0f0fe6;
   width: 100vw;
   height: 100vh;
-  //animation: fade-in 0.3s ease-in-out;
 
   .modal-content {
     min-height: var(--modal-height-mobile);
-    min-width: var(--modal-width-mobile);
+    width: var(--modal-width-mobile);
     align-self: center;
     justify-self: center;
     margin: 0 auto;
@@ -66,7 +75,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 2rem;
     border-radius: var(--border-radius);
     gap: 1rem;
     background-color: var(--grey-100);
@@ -90,7 +99,12 @@ const Wrapper = styled.div`
   @media screen and (min-width: 992px) {
     .modal-content {
       min-height: var(--modal-height-laptop);
-      min-width: var(--modal-width-laptop);
+      width: var(--modal-width-laptop);
     }
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 1.2rem;
   }
 `;

@@ -8,14 +8,17 @@ export const getAllPublications = async (req, res) => {
 };
 
 export const createPublication = async (req, res) => {
+  console.log(req.body);
   let newPublicationData = {};
   for (const [key, value] of Object.entries(req.body)) {
+    console.log(key, value);
     if (key === 'authors') {
       newPublicationData[key] = value;
     } else {
       newPublicationData[key] = value[0];
     }
   }
+  console.log(newPublicationData);
   const newPublication = await PublicationModel.create(newPublicationData);
 
   res

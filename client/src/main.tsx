@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ToastContainer, Slide } from 'react-toastify';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { GlobalContextProvider } from './context';
 import ErrorPage from './components/ErrorPage';
@@ -22,6 +23,7 @@ import {
   AdminPublications,
   AdminProjects,
   AdminTutoring,
+  NewAuthorPage,
 } from './routes';
 
 import { action as loginAction } from './routes/Login';
@@ -29,6 +31,15 @@ import {
   loader as publicationsLoader,
   action as publicationsAction,
 } from './routes/AdminPublications';
+import { action as newAuthorAction } from './routes/NewAuthorPage';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
 
 export const routes = [
   {
@@ -58,8 +69,15 @@ export const routes = [
       {
         path: 'publications',
         element: <AdminPublications />,
-        loader: publicationsLoader,
-        action: publicationsAction,
+        loader: publicationsLoader(queryClient),
+        action: publicationsAction(queryClient),
+        children: [
+          {
+            path: 'new_author',
+            element: <NewAuthorPage />,
+            action: newAuthorAction(queryClient),
+          },
+        ],
       },
       { path: 'projects', element: <AdminProjects /> },
       { path: 'tutoring', element: <AdminTutoring /> },
@@ -74,9 +92,11 @@ if (!rootElement) throw new Error('Failed to find the root element');
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <GlobalContextProvider>
-      <ToastContainer position="top-center" transition={Slide} />
-      <RouterProvider router={router} />
-    </GlobalContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <GlobalContextProvider>
+        <ToastContainer position="top-center" transition={Slide} />
+        <RouterProvider router={router} />
+      </GlobalContextProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

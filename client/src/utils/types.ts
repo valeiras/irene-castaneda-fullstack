@@ -32,3 +32,9 @@ export interface IFetchPublicationTypes {
 export interface IFetchAuthors {
   authors: IAuthor[];
 }
+
+export type ActionFunctionReturn = ({
+  request,
+}: {
+  request: Request;
+}) => Promise<unknown>;

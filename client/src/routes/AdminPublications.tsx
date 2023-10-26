@@ -1,56 +1,51 @@
 /* eslint-disable react-refresh/only-export-components */
 import styled from 'styled-components';
-import { useLoaderData } from 'react-router-dom';
-import customFetch from '../utils/customFetch';
+import { Outlet } from 'react-router-dom';
+import { ActionFunctionReturn } from '../utils/types';
 import { PublicationEditor } from '../components/Admin';
-
+import type { QueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
-  IFetchPublications,
-  IFetchPublicationTypes,
-  IPublicationType,
-  IPublication,
-  IFetchAuthors,
-} from '../utils/Interfaces';
-import { ACTION_INTENTS } from '../utils/constants';
+  publicationsQuery,
+  publicationTypesQuery,
+  authorsQuery,
+} from '../utils/queries';
 
-export const loader = async () => {
-  try {
-    const {
-      data: { publicationTypes },
-    } = await customFetch<IFetchPublicationTypes>('/publications/types');
+type LoaderFunctionReturn = () => Promise<unknown>;
+export const loader: (queryClient: QueryClient) => LoaderFunctionReturn = (
+  queryClient
+) => {
+  return async () => {
+    try {
+      await queryClient.ensureQueryData(publicationsQuery);
+      await queryClient.ensureQueryData(publicationTypesQuery);
+      await queryClient.ensureQueryData(authorsQuery);
 
-    const {
-      data: { publications },
-    } = await customFetch<IFetchPublications>('publications');
-
-    const {
-      data: { authors },
-    } = await customFetch<IFetchAuthors>('authors');
-
-    return { publicationTypes, publications, authors };
-  } catch (error) {
-    return error;
-  }
+      return 'ok';
+    } catch (error) {
+      return error;
+    }
+  };
 };
 
-export const action = async ({ request }: { request: Request }) => {
-  const formData = await request.formData();
-  const intent = formData.get('intent');
+export const action: (queryClient: QueryClient) => ActionFunctionReturn = (
+  queryClient
+) => {
+  return async ({ request }: { request: Request }) => {
+    const formData = await request.formData();
 
-  if (intent === ACTION_INTENTS.CREATE_NEW_AUTHOR) {
-    const newAuthor = await customFetch.post('/authors', formData);
-    console.log(newAuthor);
-
-    return newAuthor;
-  }
-  return formData;
+    await queryClient.invalidateQueries({ queryKey: ['publications'] });
+    return null;
+  };
 };
 
 const AdminPublications: React.FC = () => {
-  const { publicationTypes, publications } = useLoaderData() as {
-    publicationTypes: IPublicationType[];
-    publications: IPublication[];
-  };
+  const { data: publications } = useQuery(publicationsQuery);
+  const { data: publicationTypes } = useQuery(publicationTypesQuery);
+
+  if (!publications || !publicationTypes) {
+    return <Wrapper>Loading...</Wrapper>;
+  }
 
   return (
     <Wrapper className="AdminPublications hero-container">
@@ -62,10 +57,14 @@ const AdminPublications: React.FC = () => {
           });
 
           return (
-            <div key={type}>
+            <div key={type} className="publication-type-container">
               <h3>{label}:</h3>
               {publicationsCurrentType?.map((pub) => {
-                return <PublicationEditor publication={pub} key={pub._id} />;
+                return (
+                  <PublicationEditor publication={pub} key={pub._id}>
+                    <Outlet />
+                  </PublicationEditor>
+                );
               })}
             </div>
           );
@@ -80,14 +79,17 @@ const Wrapper = styled.div`
   gap: 1rem;
 
   .publications-container {
-    border: 1px solid red;
     width: 80%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
-  h3 {
-    margin-bottom: 1rem;
+  .publication-type-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid blue;
   }
 `;

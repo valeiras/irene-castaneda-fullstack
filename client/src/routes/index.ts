@@ -10,3 +10,4 @@ export { default as AdminProjects } from './AdminProjects';
 export { default as AdminPublications } from './AdminPublications';
 export { default as AdminTutoring } from './AdminTutoring';
 export { default as AdminHome } from './AdminHome';
+export { default as NewAuthorPage } from './NewAuthorPage';

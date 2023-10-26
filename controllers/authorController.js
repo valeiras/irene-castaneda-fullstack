@@ -9,7 +9,11 @@ export const getAllAuthors = async (req, res) => {
 export const createAuthor = async (req, res) => {
   let newAuthorData = {};
   for (const [key, value] of Object.entries(req.body)) {
-    newAuthorData[key] = value[0];
+    if (key === 'highlighted') {
+      newAuthorData[key] = true;
+    } else {
+      newAuthorData[key] = value[0];
+    }
   }
 
   const newAuthor = await AuthorModel.create(newAuthorData);

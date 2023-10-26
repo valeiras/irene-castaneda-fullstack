@@ -1,11 +1,26 @@
 import styled from 'styled-components';
+import { DeletePublicationConfirmationModal } from '.';
 
-import { AiFillEdit, AiFillSave, AiOutlineCloseCircle } from 'react-icons/ai';
+import {
+  AiFillEdit,
+  AiFillSave,
+  AiOutlineUndo,
+  AiFillDelete,
+} from 'react-icons/ai';
 import { usePublicationEditorContext } from './PublicationEditor';
+import { useState } from 'react';
 
 const ButtonStrip: React.FC = () => {
-  const { isDisabled, setIsDisabled, resetIdx, setResetIdx } =
-    usePublicationEditorContext();
+  const {
+    isDisabled,
+    setIsDisabled,
+    resetIdx,
+    setResetIdx,
+    setTempAuthorIds,
+    publication,
+  } = usePublicationEditorContext();
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
 
   if (isDisabled) {
     return (
@@ -17,6 +32,7 @@ const ButtonStrip: React.FC = () => {
             setIsDisabled(false);
           }}
           key="toggleEdit"
+          title="Edit publication"
         >
           <AiFillEdit />
         </button>
@@ -25,7 +41,12 @@ const ButtonStrip: React.FC = () => {
   } else {
     return (
       <Wrapper>
-        <button type="submit" className="invisible-btn" key="save">
+        <button
+          type="submit"
+          className="invisible-btn"
+          key="save"
+          title="Save changes"
+        >
           <AiFillSave />
         </button>
 
@@ -33,12 +54,28 @@ const ButtonStrip: React.FC = () => {
           type="button"
           className="invisible-btn"
           onClick={() => {
-            setResetIdx(resetIdx + 1);
+            setTempAuthorIds(publication.authorIds);
             setIsDisabled(true);
+            setResetIdx(resetIdx + 1);
           }}
+          title="Discard changes"
         >
-          <AiOutlineCloseCircle />
+          <AiOutlineUndo />
         </button>
+        <button
+          type="button"
+          className="invisible-btn"
+          onClick={() => {
+            setIsConfirmationModalVisible(true);
+          }}
+          title="Delete publication"
+        >
+          <AiFillDelete />
+        </button>
+        <DeletePublicationConfirmationModal
+          isConfirmationModalVisible={isConfirmationModalVisible}
+          setIsConfirmationModalVisible={setIsConfirmationModalVisible}
+        />
       </Wrapper>
     );
   }
@@ -50,6 +87,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+  gap: 1rem;
 
   button {
     font-size: 1.3rem;

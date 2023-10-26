@@ -48,13 +48,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
 
-  h3 {
-    text-align: center;
-  }
-
   .buttons {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+    justify-content: center;
+  }
+  .btn {
+    font-size: 1rem;
   }
 `;

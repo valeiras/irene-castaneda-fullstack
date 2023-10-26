@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const InputElement: React.FC<{
+const InputElement: React.FC<{
   name: string;
   label: string;
   defaultValue?: string;
@@ -31,6 +31,8 @@ export const InputElement: React.FC<{
     </Wrapper>
   );
 };
+
+export default InputElement;
 
 const Wrapper = styled.div`
   display: grid;
