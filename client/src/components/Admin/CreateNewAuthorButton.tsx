@@ -1,16 +1,22 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { usePublicationEditorContext } from './PublicationEditor';
+import { useAdminPublicationsContext } from '../../routes/AdminPublications';
 
 const CreateNewAuthorButton = () => {
+  const { setIsNewAuthorModalVisible } = useAdminPublicationsContext();
   const { isEditDisabled } = usePublicationEditorContext();
   return (
     <Wrapper className="CreateNewAuthorButton">
-      <Link to="new_author">
-        <button type="button" className="btn" disabled={isEditDisabled}>
-          Create new author
-        </button>
-      </Link>
+      <button
+        type="button"
+        className="btn"
+        disabled={isEditDisabled}
+        onClick={() => {
+          setIsNewAuthorModalVisible(true);
+        }}
+      >
+        Create new author
+      </button>
     </Wrapper>
   );
 };

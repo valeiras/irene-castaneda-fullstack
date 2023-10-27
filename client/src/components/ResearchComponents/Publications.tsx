@@ -1,52 +1,39 @@
 import styled from 'styled-components';
-import {
-  emailLink,
-  googleScholarLink,
-  orcidLink,
-} from '../../data/contactData';
+import { Introduction, PublicationsOfType } from '.';
+import { publicationTypesQuery, publicationsQuery } from '../../utils/queries';
+import { useQuery } from '@tanstack/react-query';
 
 const Publications: React.FC = () => {
+  const { data: publications } = useQuery(publicationsQuery);
+  const { data: publicationTypes } = useQuery(publicationTypesQuery);
+
+  if (!publications || !publicationTypes) {
+    return <Wrapper>Loading...</Wrapper>;
+  }
+
   return (
     <Wrapper className="Publications subsection-container">
       <h2 className="title">Publications:</h2>
-      <div className="block-container">
-        <p className="high-line">
-          You can visit my profile on{' '}
-          <a
-            href={orcidLink.url}
-            className="text-link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Orcid
-          </a>{' '}
-          or{' '}
-          <a
-            href={googleScholarLink.url}
-            className="text-link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Google Scholar
-          </a>{' '}
-        </p>
-        <p className="high-line">
-          Please{' '}
-          <a
-            href={emailLink.url}
-            className="text-link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            email me
-          </a>{' '}
-          for copies of papers.
-        </p>
+      <Introduction />
+      <div className="publications-container">
+        {publicationTypes.map(({ type, label }) => {
+          const publicationsCurrentType = publications.filter((pub) => {
+            return pub.publicationType === type;
+          });
+          return (
+            <PublicationsOfType
+              key={type}
+              label={label}
+              publications={publicationsCurrentType}
+            />
+          );
+        })}
       </div>
     </Wrapper>
   );
 };
 export default Publications;
+
 const Wrapper = styled.div`
   .text-link {
     font-weight: 700;
@@ -57,9 +44,5 @@ const Wrapper = styled.div`
 
   .text-link:hover {
     text-decoration-color: inherit;
-  }
-
-  .high-line {
-    line-height: 2;
   }
 `;

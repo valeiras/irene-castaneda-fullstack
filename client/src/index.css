@@ -286,6 +286,10 @@ ul {
   }
 }
 
+.high-line {
+  line-height: 2;
+}
+
 /* 
 ========
 Navbar-spacer
@@ -306,6 +310,7 @@ Subsections
   flex-direction: column;
   gap: var(--hero-gap);
   padding: var(--hero-gap) 0;
+  width: 90%;
 }
 
 .space-evenly {
@@ -325,6 +330,11 @@ Subsections
   font-weight: 400;
 }
 
+@media screen and (min-width: 992px) {
+  .subsection-container {
+    width: 60%;
+  }
+}
 /* 
 ========
 Form

@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import styled from 'styled-components';
-import { ActionFunctionReturn } from '../utils/types';
-import { AdminPublicationType } from '../components/Admin';
+import { ActionFunctionReturn, LoaderFunctionReturn } from '../utils/types';
+import { AdminPublicationType, NewAuthorModal } from '../components/Admin';
 import type { QueryClient } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -13,8 +13,8 @@ import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import displayAxiosError from '../utils/displayAxiosError';
 import { Outlet } from 'react-router-dom';
+import { createContext, useContext, useState } from 'react';
 
-type LoaderFunctionReturn = () => Promise<unknown>;
 export const loader: (queryClient: QueryClient) => LoaderFunctionReturn = (
   queryClient
 ) => {
@@ -78,37 +78,57 @@ const createNewPublication = async (
   }
 };
 
+interface IContext {
+  isNewAuthorModalVisible: boolean;
+  setIsNewAuthorModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AdminPublicationsContext = createContext<IContext>({} as IContext);
+
 const AdminPublications: React.FC = () => {
   const { data: publications } = useQuery(publicationsQuery);
   const { data: publicationTypes } = useQuery(publicationTypesQuery);
+  const [isNewAuthorModalVisible, setIsNewAuthorModalVisible] = useState(false);
 
   if (!publications || !publicationTypes) {
     return <Wrapper>Loading...</Wrapper>;
   }
 
   return (
-    <Wrapper className="AdminPublications hero-container">
-      <h1>Publications</h1>
-      <div className="publications-container">
-        {publicationTypes.map(({ type, label }) => {
-          const publicationsCurrentType = publications.filter((pub) => {
-            return pub.publicationType === type;
-          });
-          return (
-            <AdminPublicationType
-              key={type}
-              type={type}
-              label={label}
-              publications={publicationsCurrentType}
-            />
-          );
-        })}
-      </div>
-      <Outlet />
-    </Wrapper>
+    <AdminPublicationsContext.Provider
+      value={{ isNewAuthorModalVisible, setIsNewAuthorModalVisible }}
+    >
+      <Wrapper className="AdminPublications hero-container">
+        <h1>Publications</h1>
+        <div className="publications-container">
+          {publicationTypes.map(({ type, label }) => {
+            const publicationsCurrentType = publications.filter((pub) => {
+              return pub.publicationType === type;
+            });
+            return (
+              <AdminPublicationType
+                key={type}
+                type={type}
+                label={label}
+                publications={publicationsCurrentType}
+              />
+            );
+          })}
+        </div>
+        <Outlet />
+        <NewAuthorModal
+          isVisible={isNewAuthorModalVisible}
+          setIsVisible={setIsNewAuthorModalVisible}
+        />
+      </Wrapper>
+    </AdminPublicationsContext.Provider>
   );
 };
 export default AdminPublications;
+
+export const useAdminPublicationsContext = () => {
+  return useContext(AdminPublicationsContext);
+};
 
 const Wrapper = styled.div`
   gap: 1rem;

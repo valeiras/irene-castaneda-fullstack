@@ -23,20 +23,18 @@ import {
   Contact,
   Login,
   AdminLayout,
-  AdminHome,
   AdminPublications,
   AdminProjects,
   AdminTutoring,
-  NewAuthorPage,
+  AdminAuthors,
 } from './routes';
 
 import { action as loginAction } from './routes/Login';
+import { loader as researchLoader } from './routes/Research';
 import {
   loader as publicationsLoader,
   action as publicationsAction,
 } from './routes/AdminPublications';
-import { action as newAuthorAction } from './routes/NewAuthorPage';
-import { AdminAuthors } from './components/Admin';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,7 +53,11 @@ export const routes = [
       { index: true, element: <Home /> },
       { path: 'teaching', element: <Teaching /> },
       { path: 'contact', element: <Contact /> },
-      { path: 'research', element: <Research /> },
+      {
+        path: 'research',
+        element: <Research />,
+        loader: researchLoader(queryClient),
+      },
       { path: 'opportunities', element: <Opportunities /> },
     ],
   },
@@ -76,13 +78,6 @@ export const routes = [
         element: <AdminPublications />,
         loader: publicationsLoader(queryClient),
         action: publicationsAction(queryClient),
-        children: [
-          {
-            path: 'new_author',
-            element: <NewAuthorPage />,
-            action: newAuthorAction(queryClient),
-          },
-        ],
       },
       {
         path: 'authors',

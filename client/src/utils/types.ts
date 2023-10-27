@@ -39,3 +39,5 @@ export type ActionFunctionReturn = ({
 }: {
   request: Request;
 }) => Promise<unknown>;
+
+export type LoaderFunctionReturn = () => Promise<unknown>;
