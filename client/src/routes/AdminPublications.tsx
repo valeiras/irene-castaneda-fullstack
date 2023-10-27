@@ -48,9 +48,6 @@ const updatePublication = async (
   formData: FormData,
   queryClient: QueryClient
 ) => {
-  console.log(formData.getAll('authorIds'));
-  console.log(formData.get('test'));
-
   try {
     await customFetch.patch(
       `/publications/${formData.get('publicationId')}`,

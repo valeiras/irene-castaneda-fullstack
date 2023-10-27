@@ -8,4 +8,5 @@ export { default as ConfirmationModal } from './modals/ConfirmationModal';
 export { default as DeletePublicationConfirmationModal } from './modals/DeletePublicationConfirmationModal';
 export { default as InputElement } from './InputElement';
 export { default as AdminPublicationType } from './AdminPublicationType';
+export { default as AdminAuthors } from './AdminAuthors';
 export { default as CreateNewAuthorButton } from './CreateNewAuthorButton';

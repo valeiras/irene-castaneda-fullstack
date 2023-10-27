@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 import { ToastContainer, Slide } from 'react-toastify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -32,6 +36,7 @@ import {
   action as publicationsAction,
 } from './routes/AdminPublications';
 import { action as newAuthorAction } from './routes/NewAuthorPage';
+import { AdminAuthors } from './components/Admin';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,7 +70,7 @@ export const routes = [
     element: <AdminLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <AdminHome /> },
+      { index: true, element: <Navigate to="publications" /> },
       {
         path: 'publications',
         element: <AdminPublications />,
@@ -78,6 +83,10 @@ export const routes = [
             action: newAuthorAction(queryClient),
           },
         ],
+      },
+      {
+        path: 'authors',
+        element: <AdminAuthors />,
       },
       { path: 'projects', element: <AdminProjects /> },
       { path: 'tutoring', element: <AdminTutoring /> },

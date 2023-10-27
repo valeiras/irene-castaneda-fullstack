@@ -9,6 +9,7 @@ export const homeSections: ISection[] = [
 
 export const adminSections: ISection[] = [
   { name: 'publications', id: 0 },
-  { name: 'projects', id: 1 },
-  { name: 'tutoring', id: 2 },
+  { name: 'authors', id: 2 },
+  { name: 'projects', id: 2 },
+  { name: 'tutoring', id: 3 },
 ];

@@ -3,7 +3,10 @@ import PublicationModel from '../models/PublicationModel.js';
 import { PUBLICATION_TYPES, typesToLabels } from '../utils/constants.js';
 
 export const getAllPublications = async (req, res) => {
-  const publications = await PublicationModel.find();
+  const publications = await PublicationModel.find().sort({
+    year: -1,
+    createdAt: -1,
+  });
   res.status(StatusCodes.OK).json({ publications });
 };
 

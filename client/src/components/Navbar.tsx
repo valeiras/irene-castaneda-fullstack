@@ -20,7 +20,7 @@ const Navbar: React.FC<{ sections: ISection[] }> = ({ sections }) => {
     <Wrapper className="Navbar">
       <div className="nav-center">
         <div className="nav-header">
-          <Link to={``}>
+          <Link to={`/`}>
             <img
               src={isDarkMode ? logoDarkMode : logo}
               alt="Irene Castañeda"

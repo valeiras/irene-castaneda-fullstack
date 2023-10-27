@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import AuthorModel from '../models/AuthorModel.js';
 
 export const getAllAuthors = async (req, res) => {
-  const authors = await AuthorModel.find();
+  const authors = await AuthorModel.find().sort({ name: 1 });
   res.status(StatusCodes.OK).json({ authors });
 };
 
