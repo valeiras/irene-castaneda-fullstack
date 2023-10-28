@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { usePublicationEditorContext } from './PublicationEditor';
-import { useAdminPublicationsContext } from '../../routes/AdminPublications';
 
 const CreateNewAuthorButton = () => {
-  const { setIsNewAuthorModalVisible } = useAdminPublicationsContext();
-  const { isEditDisabled } = usePublicationEditorContext();
+  const { isEditDisabled, setIsNewAuthorModalVisible } =
+    usePublicationEditorContext();
   return (
     <Wrapper className="CreateNewAuthorButton">
       <button

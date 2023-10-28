@@ -7,6 +7,7 @@ import {
   ButtonStrip,
   CreateNewAuthorButton,
   JournalInfoFormRow,
+  NewAuthorModal,
 } from './';
 import { Form } from 'react-router-dom';
 
@@ -17,6 +18,8 @@ interface IContext {
   setResetIdx: React.Dispatch<React.SetStateAction<number>>;
   publication: IPublication;
   tempAuthorIds: string[];
+  isNewAuthorModalVisible: boolean;
+  setIsNewAuthorModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setTempAuthorIds: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
@@ -30,6 +33,7 @@ const PublicationEditor: React.FC<{
   const [isEditDisabled, setIsEditDisabled] = useState<boolean>(!isNew);
   // We use this state as the key for the form, forcing React to re-render it when we want to reset it, by increasing this index
   const [resetIdx, setResetIdx] = useState(0);
+  const [isNewAuthorModalVisible, setIsNewAuthorModalVisible] = useState(false);
   const [tempAuthorIds, setTempAuthorIds] = useState([
     ...publication.authorIds,
   ]);
@@ -42,6 +46,8 @@ const PublicationEditor: React.FC<{
         resetIdx,
         setResetIdx,
         publication,
+        isNewAuthorModalVisible,
+        setIsNewAuthorModalVisible,
         tempAuthorIds,
         setTempAuthorIds,
       }}
@@ -69,6 +75,10 @@ const PublicationEditor: React.FC<{
           <input type="hidden" name="publicationType" value={publicationType} />
           <ButtonStrip />
         </Form>
+        <NewAuthorModal
+          isVisible={isNewAuthorModalVisible}
+          setIsVisible={setIsNewAuthorModalVisible}
+        />
       </>
     </PublicationEditorContext.Provider>
   );
