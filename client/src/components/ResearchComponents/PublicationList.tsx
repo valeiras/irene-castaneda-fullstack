@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Introduction, PublicationsOfType } from '.';
+import { Introduction, PublicationTypeList } from '.';
 import { publicationTypesQuery, publicationsQuery } from '../../utils/queries';
 import { useQuery } from '@tanstack/react-query';
 
@@ -21,7 +21,7 @@ const Publications: React.FC = () => {
             return pub.publicationType === type;
           });
           return (
-            <PublicationsOfType
+            <PublicationTypeList
               key={type}
               label={label}
               publications={publicationsCurrentType}

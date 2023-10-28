@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { IPublication } from '../../utils/types';
 import { AuthorsList } from '.';
 
-const PublicationsOfType: React.FC<{
+const PublicationTypeList: React.FC<{
   label: string;
   publications: IPublication[];
 }> = ({ label, publications }) => {
   return (
-    <Wrapper className="PublicationsOfType">
+    <Wrapper className="PublicationTypeList">
       <h3>{label}:</h3>
       <ol reversed className="type-container">
         {publications.map((pub) => {
@@ -16,7 +16,15 @@ const PublicationsOfType: React.FC<{
             <li className="publication" key={pub._id}>
               <AuthorsList publication={pub} />
               {`(${pub.year}). `}
-              {`${pub.title}. `}
+              {pub.link ? (
+                <a
+                  href={pub.link}
+                  target="_blank"
+                  // ref="noreferrer"
+                >{`${pub.title}. `}</a>
+              ) : (
+                `${pub.title}. `
+              )}
               <span className="journal">{`${pub.journal}, `}</span>
               {`${pub.pages}.`}
             </li>
@@ -26,7 +34,7 @@ const PublicationsOfType: React.FC<{
     </Wrapper>
   );
 };
-export default PublicationsOfType;
+export default PublicationTypeList;
 
 const Wrapper = styled.div`
   width: 100%;

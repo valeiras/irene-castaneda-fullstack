@@ -1,6 +1,7 @@
 import { authorsQuery } from '../../utils/queries';
 import { useQuery } from '@tanstack/react-query';
 import { IPublication } from '../../utils/types';
+import { nanoid } from 'nanoid';
 
 const AuthorsList: React.FC<{ publication: IPublication }> = ({
   publication,
@@ -15,7 +16,10 @@ const AuthorsList: React.FC<{ publication: IPublication }> = ({
           return _id === authorId;
         });
         return (
-          <span style={currAuthor?.highlighted ? { fontWeight: '500' } : {}}>
+          <span
+            style={currAuthor?.highlighted ? { fontWeight: '500' } : {}}
+            key={nanoid()}
+          >
             {idx < publication.authorIds.length - 2
               ? `${currAuthor?.name}, `
               : idx === publication.authorIds.length - 2

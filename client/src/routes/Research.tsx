@@ -3,7 +3,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { Fullpage } from '../components';
 import {
   ResearchProjects,
-  Publications,
+  PublicationList,
 } from '../components/ResearchComponents';
 import {
   authorsQuery,
@@ -33,7 +33,7 @@ const Research: React.FC = () => {
   return (
     <Fullpage heroClass="hero-container center-content">
       <ResearchProjects />
-      <Publications />
+      <PublicationList />
     </Fullpage>
   );
 };

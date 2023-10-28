@@ -165,6 +165,13 @@ a {
   color: inherit;
   height: fit-content;
   width: fit-content;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+}
+
+a:hover {
+  text-decoration-color: inherit;
+  transition: var(--transition);
 }
 
 ul {
