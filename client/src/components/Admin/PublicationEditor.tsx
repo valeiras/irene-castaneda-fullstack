@@ -71,7 +71,7 @@ const PublicationEditor: React.FC<{
             label="Journal"
           />
           <JournalInfoFormRow publication={publication} />
-          <input type="hidden" name="publicationId" value={publication._id} />
+          <input type="hidden" name="itemId" value={publication._id} />
           <input type="hidden" name="publicationType" value={publicationType} />
           <ButtonStrip />
         </Form>

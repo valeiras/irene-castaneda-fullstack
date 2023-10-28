@@ -22,6 +22,13 @@ export interface IAuthor {
   _id: string;
 }
 
+export interface IProject {
+  name: string;
+  description: string;
+  cloudinaryUrl: string;
+  _id: string;
+}
+
 export interface IFetchPublications {
   publications: IPublication[];
 }
@@ -32,6 +39,10 @@ export interface IFetchPublicationTypes {
 
 export interface IFetchAuthors {
   authors: IAuthor[];
+}
+
+export interface IFetchProjects {
+  projects: IProject[];
 }
 
 export type ActionFunctionReturn = ({

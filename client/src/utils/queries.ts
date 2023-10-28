@@ -3,6 +3,7 @@ import {
   IFetchPublications,
   IFetchPublicationTypes,
   IFetchAuthors,
+  IFetchProjects,
 } from './types';
 
 export const authorsQuery = {
@@ -32,5 +33,15 @@ export const publicationTypesQuery = {
       data: { publicationTypes },
     } = await customFetch<IFetchPublicationTypes>('publications/types');
     return publicationTypes;
+  },
+};
+
+export const projectsQuery = {
+  queryKey: ['projects'],
+  queryFn: async () => {
+    const {
+      data: { projects },
+    } = await customFetch<IFetchProjects>('projects');
+    return projects;
   },
 };
