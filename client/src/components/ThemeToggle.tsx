@@ -26,7 +26,7 @@ export default ThemeToggle;
 
 const Wrapper = styled.div`
   display: flex;
-
+  justify-self: right;
   .dark-toggle {
     background: transparent;
     border-color: transparent;

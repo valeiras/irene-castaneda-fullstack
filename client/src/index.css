@@ -332,9 +332,11 @@ Subsections
 
 @media screen and (min-width: 992px) {
   .subsection-container {
-    width: 60%;
+    width: 80%;
+    max-width: var(--max-width);
   }
 }
+
 /* 
 ========
 Form

@@ -7,7 +7,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import displayAxiosError from '../../../utils/displayAxiosError';
 import { toast } from 'react-toastify';
 import { useRef } from 'react';
-import { usePublicationEditorContext } from '../PublicationEditor';
 
 const NewAuthorModal: React.FC<{
   isVisible: boolean;
@@ -15,7 +14,6 @@ const NewAuthorModal: React.FC<{
 }> = ({ isVisible, setIsVisible }) => {
   const queryClient = useQueryClient();
   const formRef = useRef<HTMLFormElement>(null);
-  const { tempAuthorIds, setTempAuthorIds } = usePublicationEditorContext();
 
   const createNewAuthor = async (
     evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -24,11 +22,7 @@ const NewAuthorModal: React.FC<{
     try {
       if (formRef.current) {
         const formData = new FormData(formRef.current);
-        const {
-          data: { newAuthor },
-        } = await customFetch.post('/authors', formData);
-        tempAuthorIds.push(newAuthor._id);
-        setTempAuthorIds([...tempAuthorIds]);
+        await customFetch.post('/authors', formData);
         await queryClient.invalidateQueries({ queryKey: ['authors'] });
         setIsVisible(false);
         toast.success('Author created succesfully');

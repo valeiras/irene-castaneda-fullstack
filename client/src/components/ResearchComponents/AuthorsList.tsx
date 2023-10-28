@@ -10,13 +10,17 @@ const AuthorsList: React.FC<{ publication: IPublication }> = ({
 
   return (
     <>
-      {publication.authorIds.map((authorId) => {
+      {publication.authorIds.map((authorId, idx) => {
         const currAuthor = allAuthors.find(({ _id }) => {
           return _id === authorId;
         });
         return (
           <span style={currAuthor?.highlighted ? { fontWeight: '500' } : {}}>
-            {`${currAuthor?.name}, `}
+            {idx < publication.authorIds.length - 2
+              ? `${currAuthor?.name}, `
+              : idx === publication.authorIds.length - 2
+              ? `${currAuthor?.name} and `
+              : `${currAuthor?.name} `}
           </span>
         );
       })}

@@ -13,7 +13,7 @@ export const getAllPublications = async (req, res) => {
 export const createPublication = async (req, res) => {
   let newPublicationData = {};
   for (const [key, value] of Object.entries(req.body)) {
-    if (key === 'authors') {
+    if (key === 'authorIds') {
       newPublicationData[key] = value;
     } else {
       newPublicationData[key] = value[0];

@@ -39,8 +39,9 @@ const Wrapper = styled.div`
   .full-line-container {
     margin-top: 1rem;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
     font-size: 2rem;
   }
 `;

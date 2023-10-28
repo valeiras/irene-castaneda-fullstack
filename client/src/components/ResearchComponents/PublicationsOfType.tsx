@@ -36,11 +36,12 @@ const Wrapper = styled.div`
   margin-top: 1rem;
 
   ol.type-container {
-    list-style-position: inside;
+    /* list-style-position: inside; */
   }
 
   li {
     line-height: 1.3;
+    margin-bottom: 0.5rem;
   }
 
   .journal {

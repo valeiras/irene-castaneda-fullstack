@@ -24,14 +24,20 @@ const ResearchProjects: React.FC = () => {
 export default ResearchProjects;
 const Wrapper = styled.div`
   .grid-container {
+    width: 100%;
     display: grid;
     gap: var(--grid-gap);
-    width: var(--fluid-width);
-    max-width: var(--max-width);
     grid-template-columns: 1fr;
   }
 
   @media screen and (min-width: 992px) {
+    .grid-container {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 2rem;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
     .grid-container {
       grid-template-columns: repeat(4, 1fr);
       margin-top: 2rem;
