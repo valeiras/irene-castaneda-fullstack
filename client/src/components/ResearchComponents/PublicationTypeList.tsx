@@ -42,6 +42,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin-top: 1rem;
+  h3 {
+    margin-bottom: 0.25rem;
+  }
 
   ol.type-container {
     /* list-style-position: inside; */
