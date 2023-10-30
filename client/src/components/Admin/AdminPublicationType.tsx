@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { IPublication } from '../../utils/types';
 import { PublicationEditor } from '.';
 import { createContext, useContext, useState } from 'react';
+import { nanoid } from 'nanoid';
 
 interface IContext {
   newPublications: IPublication[];
@@ -28,6 +29,7 @@ const AdminPublicationType: React.FC<{
       link: '',
       isNew: true,
       publicationType: type,
+      _id: nanoid(),
     };
     newPublications.unshift(emptyPublication);
     setNewPublications([...newPublications]);

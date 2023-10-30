@@ -5,6 +5,7 @@ import {
   ButtonStrip,
   DeleteItemConfirmationModal,
   FullLineInput,
+  ImageInput,
   TextAreaInput,
 } from '.';
 
@@ -48,6 +49,7 @@ const ProjectEditor: React.FC<{
           label="desc."
           isEditDisabled={isEditDisabled}
         />
+        <ImageInput isNew={isNew} url={project.cloudinaryUrl} />
         <input type="hidden" name="itemId" value={project._id} />
         <ButtonStrip
           isEditDisabled={isEditDisabled}

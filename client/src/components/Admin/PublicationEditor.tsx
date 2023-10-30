@@ -106,7 +106,8 @@ const PublicationEditor: React.FC<{
           isNew={publication.isNew || false}
           endpoint="publications"
           queryKey={['publications']}
-          newItems={newPubli}
+          newItems={newPublications}
+          setNewItems={setNewPublications}
         />
       </>
     </PublicationEditorContext.Provider>
