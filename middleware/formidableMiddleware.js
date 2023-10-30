@@ -19,7 +19,6 @@ export const formidableMiddleware = async (req, res, next) => {
     for (const [key, value] of Object.entries(files)) {
       req.body[key] = value;
     }
-
     next();
   });
 };

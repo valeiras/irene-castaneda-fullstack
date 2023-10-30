@@ -8,23 +8,24 @@ import {
   ImageInput,
   TextAreaInput,
 } from '.';
+import { useProjectsContext } from '../../routes/AdminProjects';
 
 const ProjectEditor: React.FC<{
   project: IProject;
   isNew: boolean;
-  newProjects: IProject[];
-  setNewProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
-}> = ({ project, isNew, newProjects, setNewProjects }) => {
+}> = ({ project, isNew }) => {
   const [
     isDeleteConfirmationModalVisible,
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
   const [isEditDisabled, setIsEditDisabled] = useState<boolean>(!isNew);
   const [resetIdx, setResetIdx] = useState(0);
+  const { newProjects, setNewProjects } = useProjectsContext();
 
   const onClickDelete = () => {
     setIsDeleteConfirmationModalVisible(true);
   };
+
   const onClickDiscard = () => {
     setIsEditDisabled(true);
     setResetIdx(resetIdx + 1);
@@ -36,6 +37,7 @@ const ProjectEditor: React.FC<{
         className="editor-form"
         key={resetIdx}
         method={isNew ? 'post' : 'patch'}
+        encType="multipart/form-data"
       >
         <FullLineInput
           name="title"
@@ -49,7 +51,10 @@ const ProjectEditor: React.FC<{
           label="desc."
           isEditDisabled={isEditDisabled}
         />
-        <ImageInput isNew={isNew} url={project.cloudinaryUrl} />
+        <ImageInput
+          url={project.cloudinaryUrl}
+          isEditDisabled={isEditDisabled}
+        />
         <input type="hidden" name="itemId" value={project._id} />
         <ButtonStrip
           isEditDisabled={isEditDisabled}
@@ -72,5 +77,3 @@ const ProjectEditor: React.FC<{
   );
 };
 export default ProjectEditor;
-
-// TODO: abstract the aspect as well, this is going to be very repetitive!!!

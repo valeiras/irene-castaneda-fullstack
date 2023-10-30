@@ -8,14 +8,15 @@ import {
   getLoaderFunction,
   getUpdateFunction,
 } from '../utils/functionCreators';
-import { useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { ProjectEditor } from '../components/Admin';
 import { nanoid } from 'nanoid';
 
 interface IContext {
-  newPublications: IProject[];
-  setNewPublications: React.Dispatch<React.SetStateAction<IProject[]>>;
+  newProjects: IProject[];
+  setNewProjects: React.Dispatch<React.SetStateAction<IProject[]>>;
 }
+const AdminProjectsContext = createContext<IContext>({} as IContext);
 
 export const loader = getLoaderFunction({ queries: [projectsQuery] });
 
@@ -57,27 +58,34 @@ const AdminProjects: React.FC = () => {
   }
 
   return (
-    <div className="AdminProjects hero-container" style={{ gap: '1rem' }}>
-      <h1>Projects</h1>
-      <div className="admin-items-container">
-        <button type="button" className="btn" onClick={addNewProject}>
-          Add new
-        </button>
-        {[...newProjects, ...projects].map((proj) => {
-          console.log(proj._id);
-
-          return (
-            <ProjectEditor
-              project={proj}
-              key={proj._id}
-              isNew={proj?.isNew || false}
-              newProjects={newProjects}
-              setNewProjects={setNewProjects}
-            />
-          );
-        })}
+    <AdminProjectsContext.Provider
+      value={{
+        newProjects,
+        setNewProjects,
+      }}
+    >
+      <div className="AdminProjects hero-container" style={{ gap: '1rem' }}>
+        <h1>Projects</h1>
+        <div className="admin-items-container">
+          <button type="button" className="btn" onClick={addNewProject}>
+            Add new
+          </button>
+          {[...newProjects, ...projects].map((proj) => {
+            return (
+              <ProjectEditor
+                project={proj}
+                key={proj._id}
+                isNew={proj?.isNew || false}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </AdminProjectsContext.Provider>
   );
 };
 export default AdminProjects;
+
+export const useProjectsContext = () => {
+  return useContext(AdminProjectsContext);
+};

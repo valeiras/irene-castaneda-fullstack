@@ -169,7 +169,7 @@ a {
   text-decoration-color: transparent;
 }
 
-a:hover {
+a.underline-on-hover:hover {
   text-decoration-color: inherit;
   transition: var(--transition);
 }

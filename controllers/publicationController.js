@@ -19,7 +19,6 @@ export const createPublication = async (req, res) => {
       newPublicationData[key] = value[0];
     }
   }
-  console.log(newPublicationData);
   const newPublication = await PublicationModel.create(newPublicationData);
 
   res
@@ -50,8 +49,6 @@ export const updatePublication = async (req, res) => {
       newPublicationData[key] = value[0];
     }
   }
-
-  console.log(newPublicationData);
 
   const updatedPublication = await PublicationModel.findByIdAndUpdate(
     req.params.publicationId,

@@ -20,7 +20,7 @@ const PublicationTypeList: React.FC<{
                 <a
                   href={pub.link}
                   target="_blank"
-                  // ref="noreferrer"
+                  className="underline-on-hover"
                 >{`${pub.title}. `}</a>
               ) : (
                 `${pub.title}. `

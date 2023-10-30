@@ -53,14 +53,15 @@ export const updateProject = async (req, res) => {
 
   if (newProjectData.imageFile) {
     const oldProject = await ProjectModel.findById(req.params.projectId);
+    console.log(oldProject.cloudinaryId);
     await cloudinary.v2.uploader.destroy(oldProject.cloudinaryId);
 
     const response = await cloudinary.v2.uploader.upload(
       newProjectData.imageFile.filepath,
       { folder: 'irene-castaneda' }
     );
-    req.body.cloudinaryUrl = response.url;
-    req.body.cloudinaryId = response.public_id;
+    newProjectData.cloudinaryUrl = response.url;
+    newProjectData.cloudinaryId = response.public_id;
   }
 
   const updatedProject = await ProjectModel.findByIdAndUpdate(

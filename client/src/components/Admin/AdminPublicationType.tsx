@@ -9,7 +9,6 @@ interface IContext {
   newPublications: IPublication[];
   setNewPublications: React.Dispatch<React.SetStateAction<IPublication[]>>;
 }
-
 const AdminPublicationTypeContext = createContext<IContext>({} as IContext);
 
 const AdminPublicationType: React.FC<{
