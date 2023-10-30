@@ -1,21 +1,21 @@
 /* eslint-disable react-refresh/only-export-components */
 import { IPublication } from '../../utils/types';
-import FullLineFormRow from './FullLineFormRow';
+import FullLineInput from './FullLineInput';
 import { useState, createContext, useContext } from 'react';
 import {
   AuthorsFormRow,
   ButtonStrip,
   CreateNewAuthorButton,
+  DeleteItemConfirmationModal,
   JournalInfoFormRow,
   NewAuthorModal,
 } from './';
 import { Form } from 'react-router-dom';
+import { usePublicationTypeContext } from './AdminPublicationType';
 
 interface IContext {
   isEditDisabled: boolean;
   setIsEditDisabled: React.Dispatch<React.SetStateAction<boolean>>;
-  resetIdx: number;
-  setResetIdx: React.Dispatch<React.SetStateAction<number>>;
   publication: IPublication;
   tempAuthorIds: string[];
   isNewAuthorModalVisible: boolean;
@@ -34,17 +34,30 @@ const PublicationEditor: React.FC<{
   // We use this state as the key for the form, forcing React to re-render it when we want to reset it, by increasing this index
   const [resetIdx, setResetIdx] = useState(0);
   const [isNewAuthorModalVisible, setIsNewAuthorModalVisible] = useState(false);
+  const [
+    isDeleteConfirmationModalVisible,
+    setIsDeleteConfirmationModalVisible,
+  ] = useState(false);
   const [tempAuthorIds, setTempAuthorIds] = useState([
     ...publication.authorIds,
   ]);
 
+  const onClickDiscard = () => {
+    setTempAuthorIds(publication.authorIds);
+    setIsEditDisabled(true);
+    setResetIdx(resetIdx + 1);
+  };
+
+  const onClickDelete = () => {
+    setIsDeleteConfirmationModalVisible(true);
+  };
+
+  const { newPublications, setNewPublications } = usePublicationTypeContext();
   return (
     <PublicationEditorContext.Provider
       value={{
         isEditDisabled,
         setIsEditDisabled,
-        resetIdx,
-        setResetIdx,
         publication,
         isNewAuthorModalVisible,
         setIsNewAuthorModalVisible,
@@ -58,26 +71,42 @@ const PublicationEditor: React.FC<{
           key={resetIdx}
           method={isNew ? 'post' : 'patch'}
         >
-          <FullLineFormRow
+          <FullLineInput
             name="title"
             defaultValue={publication.title}
             label="Title"
+            isEditDisabled={isEditDisabled}
           />
           <AuthorsFormRow />
           <CreateNewAuthorButton />
-          <FullLineFormRow
+          <FullLineInput
             name="journal"
             defaultValue={publication.journal}
             label="Journal"
+            isEditDisabled={isEditDisabled}
           />
           <JournalInfoFormRow publication={publication} />
           <input type="hidden" name="itemId" value={publication._id} />
           <input type="hidden" name="publicationType" value={publicationType} />
-          <ButtonStrip />
+          <ButtonStrip
+            onClickDiscard={onClickDiscard}
+            onClickDelete={onClickDelete}
+            isEditDisabled={isEditDisabled}
+            setIsEditDisabled={setIsEditDisabled}
+          />
         </Form>
         <NewAuthorModal
           isVisible={isNewAuthorModalVisible}
           setIsVisible={setIsNewAuthorModalVisible}
+        />
+        <DeleteItemConfirmationModal
+          isConfirmationModalVisible={isDeleteConfirmationModalVisible}
+          setIsConfirmationModalVisible={setIsDeleteConfirmationModalVisible}
+          id={publication._id || ''}
+          isNew={publication.isNew || false}
+          endpoint="publications"
+          queryKey={['publications']}
+          newItems={newPubli}
         />
       </>
     </PublicationEditorContext.Provider>

@@ -9,7 +9,7 @@ interface IContext {
   setNewPublications: React.Dispatch<React.SetStateAction<IPublication[]>>;
 }
 
-const PublicationTypeContext = createContext<IContext>({} as IContext);
+const AdminPublicationTypeContext = createContext<IContext>({} as IContext);
 
 const AdminPublicationType: React.FC<{
   type: string;
@@ -18,7 +18,7 @@ const AdminPublicationType: React.FC<{
 }> = ({ type, label, publications }) => {
   const [newPublications, setNewPublications] = useState<IPublication[]>([]);
 
-  const addNewPublication = async () => {
+  const addNewPublication = () => {
     const emptyPublication = {
       title: '',
       year: '',
@@ -34,7 +34,7 @@ const AdminPublicationType: React.FC<{
   };
 
   return (
-    <PublicationTypeContext.Provider
+    <AdminPublicationTypeContext.Provider
       value={{
         newPublications,
         setNewPublications,
@@ -56,13 +56,13 @@ const AdminPublicationType: React.FC<{
           );
         })}
       </Wrapper>
-    </PublicationTypeContext.Provider>
+    </AdminPublicationTypeContext.Provider>
   );
 };
 export default AdminPublicationType;
 
 export const usePublicationTypeContext = () => {
-  return useContext(PublicationTypeContext);
+  return useContext(AdminPublicationTypeContext);
 };
 
 const Wrapper = styled.div`

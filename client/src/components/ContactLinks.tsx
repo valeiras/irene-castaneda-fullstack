@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IContactLink } from '../assets/ts/types';
+import { IContactLink } from '../utils/types';
 
 const ContactLinks: React.FC<{ links: IContactLink[]; hasName: boolean }> = ({
   links,

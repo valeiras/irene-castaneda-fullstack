@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SHOW_FULLPAGE_IMG } from '../assets/ts/actionTypes';
+import { SHOW_FULLPAGE_IMG } from '../utils/actionTypes';
 import useGlobalContext from '../hooks/useGlobalContext';
 
 const CardItem: React.FC<{

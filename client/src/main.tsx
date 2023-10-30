@@ -36,6 +36,7 @@ import {
   loader as publicationsLoader,
   action as publicationsAction,
 } from './routes/AdminPublications';
+import { action as projectsAction } from './routes/AdminProjects';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -85,7 +86,11 @@ export const routes = [
         path: 'authors',
         element: <AdminAuthors />,
       },
-      { path: 'projects', element: <AdminProjects /> },
+      {
+        path: 'projects',
+        element: <AdminProjects />,
+        action: projectsAction(queryClient),
+      },
       { path: 'tutoring', element: <AdminTutoring /> },
     ],
   },

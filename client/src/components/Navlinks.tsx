@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import useGlobalContext from '../hooks/useGlobalContext';
-import { SET_SHOW_LINKS } from '../assets/ts/actionTypes';
-import { ISection } from '../assets/ts/types';
+import { SET_SHOW_LINKS } from '../utils/actionTypes';
+import { ISection } from '../utils/types';
 
 const Navlinks: React.FC<{ sections: ISection[] }> = ({ sections }) => {
   const {

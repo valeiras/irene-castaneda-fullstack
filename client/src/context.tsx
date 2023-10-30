@@ -1,6 +1,6 @@
 import { createContext, useReducer, useEffect } from 'react';
-import { IGlobalState, ContextType } from './assets/ts/types';
-import reducer from './assets/ts/reducer';
+import { IGlobalState, ContextType } from './utils/types';
+import reducer from './utils/reducer';
 
 const initialState: IGlobalState = {
   isDarkMode: false,

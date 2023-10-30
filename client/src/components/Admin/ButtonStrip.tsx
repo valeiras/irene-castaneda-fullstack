@@ -1,30 +1,20 @@
 import styled from 'styled-components';
-import { DeletePublicationConfirmationModal } from '.';
-
 import {
   AiFillEdit,
   AiFillSave,
   AiOutlineUndo,
   AiFillDelete,
 } from 'react-icons/ai';
-import { usePublicationEditorContext } from './PublicationEditor';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigation } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
-const ButtonStrip: React.FC = () => {
-  const {
-    isEditDisabled,
-    setIsEditDisabled,
-    resetIdx,
-    setResetIdx,
-    setTempAuthorIds,
-    publication,
-  } = usePublicationEditorContext();
-
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
-    useState(false);
-
+const ButtonStrip: React.FC<{
+  isEditDisabled: boolean;
+  setIsEditDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  onClickDelete: () => void;
+  onClickDiscard: () => void;
+}> = ({ isEditDisabled, setIsEditDisabled, onClickDelete, onClickDiscard }) => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 
@@ -65,11 +55,7 @@ const ButtonStrip: React.FC = () => {
         <button
           type="button"
           className="invisible-btn"
-          onClick={() => {
-            setTempAuthorIds(publication.authorIds);
-            setIsEditDisabled(true);
-            setResetIdx(resetIdx + 1);
-          }}
+          onClick={onClickDiscard}
           key={nanoid()}
           title="Discard changes"
         >
@@ -78,18 +64,12 @@ const ButtonStrip: React.FC = () => {
         <button
           type="button"
           className="invisible-btn"
-          onClick={() => {
-            setIsConfirmationModalVisible(true);
-          }}
+          onClick={onClickDelete}
           key={nanoid()}
           title="Delete publication"
         >
           <AiFillDelete />
         </button>
-        <DeletePublicationConfirmationModal
-          isConfirmationModalVisible={isConfirmationModalVisible}
-          setIsConfirmationModalVisible={setIsConfirmationModalVisible}
-        />
       </Wrapper>
     );
   }

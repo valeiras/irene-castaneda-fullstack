@@ -1,4 +1,4 @@
-import { HIDE_FULLPAGE_IMG } from '../assets/ts/actionTypes';
+import { HIDE_FULLPAGE_IMG } from '../utils/actionTypes';
 import { FaTimes } from 'react-icons/fa';
 import useGlobalContext from '../hooks/useGlobalContext';
 import styled from 'styled-components';

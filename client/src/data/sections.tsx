@@ -1,4 +1,4 @@
-import { ISection } from '../assets/ts/types';
+import { ISection } from '../utils/types';
 
 export const homeSections: ISection[] = [
   { name: 'research', id: 0 },
@@ -9,7 +9,7 @@ export const homeSections: ISection[] = [
 
 export const adminSections: ISection[] = [
   { name: 'publications', id: 0 },
-  { name: 'authors', id: 2 },
+  { name: 'authors', id: 1 },
   { name: 'projects', id: 2 },
   { name: 'tutoring', id: 3 },
 ];

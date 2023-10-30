@@ -114,7 +114,6 @@ body {
   line-height: 1;
   overflow-x: hidden;
   transition: var(--color-transition), var(--bg-transition);
-  padding-bottom: 2rem;
 }
 
 p {
@@ -431,6 +430,7 @@ Editor form
   font-family: inherit;
   font-weight: 300;
   margin: 0;
+  resize: none;
 }
 .editor-form-input,
 .editor-form-select,
@@ -479,6 +479,7 @@ Hero container
   flex-direction: column;
   align-items: center;
   padding-top: var(--hero-gap);
+  gap: 2rem;
 }
 
 /* Admin */

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TOGGLE_DARK_MODE } from '../assets/ts/actionTypes';
+import { TOGGLE_DARK_MODE } from '../utils/actionTypes';
 import useGlobalContext from '../hooks/useGlobalContext';
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 

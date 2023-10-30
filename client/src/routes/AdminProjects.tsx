@@ -10,6 +10,12 @@ import {
 } from '../utils/functionCreators';
 import { useState } from 'react';
 import { ProjectEditor } from '../components/Admin';
+import { nanoid } from 'nanoid';
+
+interface IContext {
+  newPublications: IProject[];
+  setNewPublications: React.Dispatch<React.SetStateAction<IProject[]>>;
+}
 
 export const loader = getLoaderFunction({ queries: [projectsQuery] });
 
@@ -34,12 +40,13 @@ const AdminProjects: React.FC = () => {
   const { data: projects } = useQuery(projectsQuery);
   const [newProjects, setNewProjects] = useState<IProject[]>([]);
 
-  const addNewProject = async () => {
+  const addNewProject = () => {
     const emptyProject = {
-      name: '',
+      title: '',
       description: '',
       cloudinaryUrl: '',
       isNew: true,
+      _id: nanoid(),
     };
     newProjects.unshift(emptyProject);
     setNewProjects([...newProjects]);
@@ -48,6 +55,7 @@ const AdminProjects: React.FC = () => {
   if (!projects) {
     return <>Loading...</>;
   }
+
   return (
     <div className="AdminProjects hero-container" style={{ gap: '1rem' }}>
       <h1>Projects</h1>
@@ -56,11 +64,15 @@ const AdminProjects: React.FC = () => {
           Add new
         </button>
         {[...newProjects, ...projects].map((proj) => {
+          console.log(proj._id);
+
           return (
             <ProjectEditor
               project={proj}
               key={proj._id}
               isNew={proj?.isNew || false}
+              newProjects={newProjects}
+              setNewProjects={setNewProjects}
             />
           );
         })}

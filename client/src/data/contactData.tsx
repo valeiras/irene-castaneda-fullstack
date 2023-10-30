@@ -1,5 +1,5 @@
 import { SiGooglescholar } from 'react-icons/si';
-import { IContactLink } from '../assets/ts/types';
+import { IContactLink } from '../utils/types';
 import { FaOrcid, FaEnvelope, FaTwitter } from 'react-icons/fa';
 
 export const address = [

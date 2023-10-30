@@ -7,8 +7,8 @@ import logoDarkMode from '../assets/imgs/logo_dark_mode.svg';
 
 import Navlinks from './Navlinks';
 import useGlobalContext from '../hooks/useGlobalContext';
-import { TOGGLE_SHOW_LINKS, SET_SHOW_LINKS } from '../assets/ts/actionTypes';
-import { ISection } from '../assets/ts/types';
+import { TOGGLE_SHOW_LINKS, SET_SHOW_LINKS } from '../utils/actionTypes';
+import { ISection } from '../utils/types';
 
 const Navbar: React.FC<{ sections: ISection[] }> = ({ sections }) => {
   const {

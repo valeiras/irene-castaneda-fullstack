@@ -1,10 +1,10 @@
-import { IProject } from '../assets/ts/types';
+import { IProjectStatic } from '../utils/types';
 import predatorImg from '../assets/imgs/lion-hunt.jpg';
 import wildlifeImg from '../assets/imgs/wildlife.jpg';
 import seedsImg from '../assets/imgs/seeds.jpg';
 import collaborationImg from '../assets/imgs/collaboration.jpg';
 
-export const projects: IProject[] = [
+export const projects: IProjectStatic[] = [
   {
     title: 'Predator ecology',
     img: predatorImg,

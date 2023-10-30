@@ -78,7 +78,7 @@ export const validateUpdateUserInput = withValidationErrors([
 ]);
 
 export const validateProjectInput = withValidationErrors([
-  body('name').notEmpty().withMessage('name is required').trim(),
+  body('title').notEmpty().withMessage('title is required').trim(),
   body('description').notEmpty().withMessage('description is required').trim(),
   body('imageFile').notEmpty().withMessage('image file is required'),
 ]);

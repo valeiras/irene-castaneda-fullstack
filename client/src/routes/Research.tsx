@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-import { QueryClient } from '@tanstack/react-query';
 import { Fullpage } from '../components';
 import {
   ResearchProjects,
@@ -10,24 +9,11 @@ import {
   publicationTypesQuery,
   publicationsQuery,
 } from '../utils/queries';
-import displayAxiosError from '../utils/displayAxiosError';
-import { LoaderFunctionReturn } from '../utils/types';
+import { getLoaderFunction } from '../utils/functionCreators';
 
-export const loader: (queryClient: QueryClient) => LoaderFunctionReturn = (
-  queryClient
-) => {
-  return async () => {
-    try {
-      await queryClient.ensureQueryData(publicationsQuery);
-      await queryClient.ensureQueryData(publicationTypesQuery);
-      await queryClient.ensureQueryData(authorsQuery);
-      return 'ok';
-    } catch (error) {
-      displayAxiosError(error);
-      return error;
-    }
-  };
-};
+export const loader = getLoaderFunction({
+  queries: [authorsQuery, publicationsQuery, publicationTypesQuery],
+});
 
 const Research: React.FC = () => {
   return (
