@@ -1,46 +1,22 @@
 /* eslint-disable react-refresh/only-export-components */
-import { ActionFunctionReturn, LoaderFunctionReturn } from '../utils/types';
 import { AdminPublicationType } from '../components/Admin';
-import type { QueryClient } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import {
   publicationsQuery,
   publicationTypesQuery,
   authorsQuery,
 } from '../utils/queries';
-import displayAxiosError from '../utils/displayAxiosError';
 import { Outlet } from 'react-router-dom';
 import {
+  getActionFunction,
   getCreateFunction,
+  getLoaderFunction,
   getUpdateFunction,
-  patchOrPost,
 } from '../utils/functionCreators';
 
-export const loader: (queryClient: QueryClient) => LoaderFunctionReturn = (
-  queryClient
-) => {
-  return async () => {
-    try {
-      await queryClient.ensureQueryData(publicationsQuery);
-      await queryClient.ensureQueryData(publicationTypesQuery);
-      await queryClient.ensureQueryData(authorsQuery);
-      return 'ok';
-    } catch (error) {
-      displayAxiosError(error);
-      return error;
-    }
-  };
-};
-
-export const action: (queryClient: QueryClient) => ActionFunctionReturn = (
-  queryClient
-) => {
-  return patchOrPost({
-    queryClient,
-    update: updatePublication,
-    createNew: createNewPublication,
-  });
-};
+export const loader = getLoaderFunction({
+  queries: [authorsQuery, publicationsQuery, publicationTypesQuery],
+});
 
 const updatePublication = getUpdateFunction({
   apiEndpoint: 'publications',
@@ -52,6 +28,11 @@ const createNewPublication = getCreateFunction({
   apiEndpoint: 'publications',
   queryKey: 'publications',
   name: 'Publication',
+});
+
+export const action = getActionFunction({
+  createNew: createNewPublication,
+  update: updatePublication,
 });
 
 const AdminPublications: React.FC = () => {

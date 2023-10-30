@@ -1,4 +1,5 @@
 export { default as PublicationEditor } from './PublicationEditor';
+export { default as ProjectEditor } from './ProjectEditor';
 export { default as AuthorsFormRow } from './AuthorsFormRow';
 export { default as FullLineFormRow } from './FullLineFormRow';
 export { default as JournalInfoFormRow } from './JournalInfoFormRow';

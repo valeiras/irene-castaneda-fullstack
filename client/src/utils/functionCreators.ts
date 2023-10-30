@@ -1,12 +1,24 @@
-import type { QueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import customFetch from './customFetch';
 import { toast } from 'react-toastify';
 import displayAxiosError from './displayAxiosError';
+import { CustomQuery } from './queries';
 
 type UpsertFunction = (
   formData: FormData,
   queryClient: QueryClient
 ) => Promise<unknown>;
+
+export type ActionFunctionReturn = ({
+  request,
+}: {
+  request: Request;
+}) => Promise<unknown>;
+
+export type LoaderFunctionReturn = () => Promise<unknown>;
+
+type LoaderFunction = (queryClient: QueryClient) => LoaderFunctionReturn;
+type ActionFunction = (queryClient: QueryClient) => ActionFunctionReturn;
 
 type UpsertFunctionGetter = ({
   apiEndpoint,
@@ -17,6 +29,20 @@ type UpsertFunctionGetter = ({
   queryKey: string;
   name: string;
 }) => UpsertFunction;
+
+type LoaderFunctionGetter = ({
+  queries,
+}: {
+  queries: CustomQuery[];
+}) => LoaderFunction;
+
+type ActionFunctionGetter = ({
+  update,
+  createNew,
+}: {
+  update: UpsertFunction;
+  createNew: UpsertFunction;
+}) => ActionFunction;
 
 export const getUpdateFunction: UpsertFunctionGetter = ({
   apiEndpoint,
@@ -74,5 +100,34 @@ export const patchOrPost = ({
     } else if (request.method === 'POST') {
       return await createNew(formData, queryClient);
     }
+  };
+};
+
+export const getActionFunction: ActionFunctionGetter = ({
+  update,
+  createNew,
+}) => {
+  return (queryClient: QueryClient) => {
+    return patchOrPost({
+      queryClient,
+      update,
+      createNew,
+    });
+  };
+};
+
+export const getLoaderFunction: LoaderFunctionGetter = ({ queries }) => {
+  return (queryClient: QueryClient) => {
+    return async () => {
+      try {
+        for (const query of queries) {
+          await queryClient.ensureQueryData(query);
+        }
+        return 'ok';
+      } catch (error) {
+        displayAxiosError(error);
+        return error;
+      }
+    };
   };
 };

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { IPublication } from '../../utils/types';
 import { PublicationEditor } from '.';
 import { createContext, useContext, useState } from 'react';
-import { nanoid } from 'nanoid';
 
 interface IContext {
   newPublications: IPublication[];
@@ -27,7 +26,6 @@ const AdminPublicationType: React.FC<{
       journal: '',
       pages: '',
       link: '',
-      _id: nanoid(),
       isNew: true,
       publicationType: type,
     };
@@ -42,7 +40,7 @@ const AdminPublicationType: React.FC<{
         setNewPublications,
       }}
     >
-      <Wrapper key={type} className="publication-type-container">
+      <Wrapper key={type} className="publicationTypeContainer">
         <h3>{label}:</h3>
         <button type="button" className="btn" onClick={addNewPublication}>
           Add new

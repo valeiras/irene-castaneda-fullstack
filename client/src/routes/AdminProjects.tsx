@@ -1,75 +1,70 @@
 /* eslint-disable react-refresh/only-export-components */
-import { ActionFunctionReturn, LoaderFunctionReturn } from '../utils/types';
-import type { QueryClient } from '@tanstack/react-query';
+import { IProject } from '../utils/types';
 import { useQuery } from '@tanstack/react-query';
 import { projectsQuery } from '../utils/queries';
-import customFetch from '../utils/customFetch';
-import { toast } from 'react-toastify';
-import displayAxiosError from '../utils/displayAxiosError';
+import {
+  getActionFunction,
+  getCreateFunction,
+  getLoaderFunction,
+  getUpdateFunction,
+} from '../utils/functionCreators';
+import { useState } from 'react';
+import { ProjectEditor } from '../components/Admin';
 
-export const loader: (queryClient: QueryClient) => LoaderFunctionReturn = (
-  queryClient
-) => {
-  return async () => {
-    try {
-      await queryClient.ensureQueryData(projectsQuery);
-      return 'ok';
-    } catch (error) {
-      displayAxiosError(error);
-      return error;
-    }
-  };
-};
+export const loader = getLoaderFunction({ queries: [projectsQuery] });
 
-export const action: (queryClient: QueryClient) => ActionFunctionReturn = (
-  queryClient
-) => {
-  return async ({ request }: { request: Request }) => {
-    const formData = await request.formData();
-    if (request.method === 'PATCH') {
-      return await updateProject(formData, queryClient);
-    } else if (request.method === 'POST') {
-      return await createNewProject(formData, queryClient);
-    }
-  };
-};
+const updateProject = getUpdateFunction({
+  apiEndpoint: 'projects',
+  queryKey: 'projects',
+  name: 'Project',
+});
 
-const updateProject = async (formData: FormData, queryClient: QueryClient) => {
-  try {
-    await customFetch.patch(`/projects/${formData.get('projectId')}`, formData);
+const createNewProject = getCreateFunction({
+  apiEndpoint: 'projects',
+  queryKey: 'projects',
+  name: 'Project',
+});
 
-    await queryClient.invalidateQueries({ queryKey: ['projects'] });
-    toast.success('Project updated successfully!');
-    return null;
-  } catch (error) {
-    displayAxiosError(error);
-    return error;
-  }
-};
-
-const createNewProject = async (
-  formData: FormData,
-  queryClient: QueryClient
-) => {
-  try {
-    await customFetch.post(`/projects`, formData);
-    await queryClient.invalidateQueries({ queryKey: ['projects'] });
-    toast.success('Project created successfully!');
-    return null;
-  } catch (error) {
-    displayAxiosError(error);
-    return error;
-  }
-};
+export const action = getActionFunction({
+  update: updateProject,
+  createNew: createNewProject,
+});
 
 const AdminProjects: React.FC = () => {
   const { data: projects } = useQuery(projectsQuery);
-  console.log(projects);
+  const [newProjects, setNewProjects] = useState<IProject[]>([]);
 
+  const addNewProject = async () => {
+    const emptyProject = {
+      name: '',
+      description: '',
+      cloudinaryUrl: '',
+      isNew: true,
+    };
+    newProjects.unshift(emptyProject);
+    setNewProjects([...newProjects]);
+  };
+
+  if (!projects) {
+    return <>Loading...</>;
+  }
   return (
-    <div className="AdminPublications hero-container" style={{ gap: '1rem' }}>
+    <div className="AdminProjects hero-container" style={{ gap: '1rem' }}>
       <h1>Projects</h1>
-      <div className="projects-container"></div>
+      <div className="admin-items-container">
+        <button type="button" className="btn" onClick={addNewProject}>
+          Add new
+        </button>
+        {[...newProjects, ...projects].map((proj) => {
+          return (
+            <ProjectEditor
+              project={proj}
+              key={proj._id}
+              isNew={proj?.isNew || false}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

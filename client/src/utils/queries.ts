@@ -4,9 +4,36 @@ import {
   IFetchPublicationTypes,
   IFetchAuthors,
   IFetchProjects,
+  IPublication,
+  IAuthor,
+  IPublicationType,
+  IProject,
 } from './types';
 
-export const authorsQuery = {
+type AuthorsQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<IAuthor[]>;
+};
+type ProjectsQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<IProject[]>;
+};
+type PublicationsQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<IPublication[]>;
+};
+type PublicationTypesQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<IPublicationType[]>;
+};
+export type CustomQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<
+    IPublicationType[] | IPublication[] | IAuthor[] | IProject[]
+  >;
+};
+
+export const authorsQuery: AuthorsQuery = {
   queryKey: ['authors'],
   queryFn: async () => {
     const {
@@ -16,7 +43,7 @@ export const authorsQuery = {
   },
 };
 
-export const publicationsQuery = {
+export const publicationsQuery: PublicationsQuery = {
   queryKey: ['publications'],
   queryFn: async () => {
     const {
@@ -26,7 +53,7 @@ export const publicationsQuery = {
   },
 };
 
-export const publicationTypesQuery = {
+export const publicationTypesQuery: PublicationTypesQuery = {
   queryKey: ['publicationTypes'],
   queryFn: async () => {
     const {
@@ -36,7 +63,7 @@ export const publicationTypesQuery = {
   },
 };
 
-export const projectsQuery = {
+export const projectsQuery: ProjectsQuery = {
   queryKey: ['projects'],
   queryFn: async () => {
     const {
