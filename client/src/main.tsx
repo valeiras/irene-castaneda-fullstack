@@ -30,6 +30,7 @@ import {
 } from './routes';
 
 import { action as loginAction } from './routes/Login';
+import { loader as adminLoader } from './routes/AdminLayout';
 import { loader as researchLoader } from './routes/Research';
 import {
   loader as publicationsLoader,
@@ -71,6 +72,7 @@ export const routes = [
     path: '/admin',
     element: <AdminLayout />,
     errorElement: <ErrorPage />,
+    loader: adminLoader,
     children: [
       { index: true, element: <Navigate to="publications" /> },
       {
