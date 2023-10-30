@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import { IPublication } from '../../utils/types';
 import { PublicationEditor } from '.';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 
 interface IContext {
@@ -17,6 +17,10 @@ const AdminPublicationType: React.FC<{
   publications: IPublication[];
 }> = ({ type, label, publications }) => {
   const [newPublications, setNewPublications] = useState<IPublication[]>([]);
+
+  useEffect(() => {
+    setNewPublications([]);
+  }, [publications]);
 
   const addNewPublication = () => {
     const emptyPublication = {

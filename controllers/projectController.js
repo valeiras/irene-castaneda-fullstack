@@ -3,7 +3,7 @@ import ProjectModel from '../models/ProjectModel.js';
 import cloudinary from 'cloudinary';
 
 export const getAllProjects = async (req, res) => {
-  const projects = await ProjectModel.find();
+  const projects = await ProjectModel.find({}).sort({ createdAt: -1 });
   res.status(StatusCodes.OK).json({ projects });
 };
 
@@ -53,7 +53,6 @@ export const updateProject = async (req, res) => {
 
   if (newProjectData.imageFile) {
     const oldProject = await ProjectModel.findById(req.params.projectId);
-    console.log(oldProject.cloudinaryId);
     await cloudinary.v2.uploader.destroy(oldProject.cloudinaryId);
 
     const response = await cloudinary.v2.uploader.upload(

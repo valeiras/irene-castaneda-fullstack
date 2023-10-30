@@ -8,7 +8,7 @@ import {
   getLoaderFunction,
   getUpdateFunction,
 } from '../utils/functionCreators';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { ProjectEditor } from '../components/Admin';
 import { nanoid } from 'nanoid';
 
@@ -40,6 +40,10 @@ export const action = getActionFunction({
 const AdminProjects: React.FC = () => {
   const { data: projects } = useQuery(projectsQuery);
   const [newProjects, setNewProjects] = useState<IProject[]>([]);
+
+  useEffect(() => {
+    setNewProjects([]);
+  }, [projects]);
 
   const addNewProject = () => {
     const emptyProject = {
