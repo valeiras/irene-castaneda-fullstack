@@ -16,7 +16,7 @@ const AuthorsFormRow: React.FC = () => {
   }
 
   const insertExistingAuthor = () => {
-    if (allAuthors) {
+    if (allAuthors[0]._id) {
       tempAuthorIds.push(allAuthors[0]._id);
       setTempAuthorIds([...tempAuthorIds]);
     }

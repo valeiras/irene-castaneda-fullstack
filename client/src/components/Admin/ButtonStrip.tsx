@@ -24,6 +24,14 @@ const ButtonStrip: React.FC<{
     }
   }, [isSubmitting, setIsEditDisabled]);
 
+  if (isSubmitting) {
+    return (
+      <Wrapper>
+        <div className="small-loading"></div>
+      </Wrapper>
+    );
+  }
+
   if (isEditDisabled) {
     return (
       <Wrapper>

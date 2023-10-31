@@ -3,21 +3,24 @@ import { SHOW_FULLPAGE_IMG } from '../utils/actionTypes';
 import useGlobalContext from '../hooks/useGlobalContext';
 
 const CardItem: React.FC<{
-  img: string;
+  imgUrl: string;
   title: string;
   description: string;
-}> = ({ img, title, description }) => {
+}> = ({ imgUrl, title, description }) => {
   const { dispatch } = useGlobalContext();
   return (
     <Wrapper
       className="CardItem"
       onClick={() => {
-        dispatch({ type: SHOW_FULLPAGE_IMG, payload: { img, description } });
+        dispatch({
+          type: SHOW_FULLPAGE_IMG,
+          payload: { img: imgUrl, description },
+        });
       }}
     >
       <div
         className="card-item-img"
-        style={{ backgroundImage: `url(${img})` }}
+        style={{ backgroundImage: `url(${imgUrl})` }}
       ></div>
       <div className="card-item-title">{title}</div>
       <div className="card-item-over">{title}</div>

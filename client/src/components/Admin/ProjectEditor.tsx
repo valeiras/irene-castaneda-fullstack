@@ -44,12 +44,14 @@ const ProjectEditor: React.FC<{
           defaultValue={project.title}
           label="title"
           isEditDisabled={isEditDisabled}
+          isRequired={true}
         />
         <TextAreaInput
           name="description"
           defaultValue={project.description}
           label="desc."
           isEditDisabled={isEditDisabled}
+          isRequired={true}
         />
         <ImageInput
           url={project.cloudinaryUrl}

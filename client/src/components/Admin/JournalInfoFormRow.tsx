@@ -14,6 +14,7 @@ const JournalInfoFormRow: React.FC<{
         defaultValue={publication.year}
         isEditDisabled={isEditDisabled}
         label="year"
+        isRequired={true}
       />
       <InputElement
         name="pages"

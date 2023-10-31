@@ -76,6 +76,7 @@ const PublicationEditor: React.FC<{
             defaultValue={publication.title}
             label="Title"
             isEditDisabled={isEditDisabled}
+            isRequired={true}
           />
           <AuthorsFormRow />
           <CreateNewAuthorButton />
@@ -84,6 +85,7 @@ const PublicationEditor: React.FC<{
             defaultValue={publication.journal}
             label="Journal"
             isEditDisabled={isEditDisabled}
+            isRequired={true}
           />
           <JournalInfoFormRow publication={publication} />
           <input type="hidden" name="itemId" value={publication._id} />

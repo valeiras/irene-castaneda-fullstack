@@ -3,7 +3,8 @@ const FullLineInput: React.FC<{
   defaultValue: string;
   label: string;
   isEditDisabled: boolean;
-}> = ({ name, defaultValue, label, isEditDisabled }) => {
+  isRequired?: boolean;
+}> = ({ name, defaultValue, label, isEditDisabled, isRequired = false }) => {
   return (
     <div className="full-line-editor-form-row">
       <label htmlFor={name} className="editor-form-label">
@@ -15,6 +16,7 @@ const FullLineInput: React.FC<{
         defaultValue={defaultValue}
         className="editor-form-input"
         disabled={isEditDisabled}
+        required={isRequired}
       />
     </div>
   );

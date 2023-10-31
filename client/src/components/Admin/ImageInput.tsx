@@ -114,12 +114,15 @@ const Wrapper = styled.div`
     align-items: center;
     flex-direction: column;
     width: 150px;
+    transition: none;
   }
 
   #image-preview.hidden-image {
     display: none;
   }
+
   .margin-top {
+    transition: none;
     margin-top: 0.5rem;
   }
 

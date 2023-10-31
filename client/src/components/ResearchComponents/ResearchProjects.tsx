@@ -1,18 +1,24 @@
 import styled from 'styled-components';
 import { CardItem } from '..';
-import { projects } from '../../data/projectsData';
+import { useQuery } from '@tanstack/react-query';
+import { projectsQuery } from '../../utils/queries';
 
 const ResearchProjects: React.FC = () => {
+  const { data: projects } = useQuery(projectsQuery);
+  if (!projects) {
+    return null;
+  }
+
   return (
     <Wrapper className="ResearchProjects subsection-container">
       <h2 className="title">Research Projects:</h2>
       <div className="grid-container">
-        {projects.map(({ title, img, description, id }) => {
+        {projects.map(({ title, cloudinaryUrl, description, _id }) => {
           return (
             <CardItem
-              key={id}
+              key={_id}
               title={title}
-              img={img}
+              imgUrl={cloudinaryUrl}
               description={description}
             />
           );

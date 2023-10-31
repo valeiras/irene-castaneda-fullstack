@@ -6,13 +6,19 @@ import {
 } from '../components/ResearchComponents';
 import {
   authorsQuery,
+  projectsQuery,
   publicationTypesQuery,
   publicationsQuery,
 } from '../utils/queries';
 import { getLoaderFunction } from '../utils/functionCreators';
 
 export const loader = getLoaderFunction({
-  queries: [authorsQuery, publicationsQuery, publicationTypesQuery],
+  queries: [
+    authorsQuery,
+    publicationsQuery,
+    publicationTypesQuery,
+    projectsQuery,
+  ],
 });
 
 const Research: React.FC = () => {
