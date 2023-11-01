@@ -15,6 +15,20 @@ export interface IPublicationType {
   label: string;
 }
 
+export interface ITutoring {
+  students: string;
+  year: string;
+  description: string;
+  isNew?: boolean;
+  tutoringType: string;
+  _id?: string;
+}
+
+export interface ITutoringType {
+  type: string;
+  label: string;
+}
+
 export interface IAuthor {
   name: string;
   link?: string;
@@ -45,6 +59,14 @@ export interface IFetchAuthors {
 
 export interface IFetchProjects {
   projects: IProject[];
+}
+
+export interface IFetchTutorings {
+  tutorings: ITutoring[];
+}
+
+export interface IFetchTutoringTypes {
+  tutoringTypes: ITutoringType[];
 }
 
 import { Dispatch, ReactNode } from 'react';
@@ -88,14 +110,6 @@ export interface IContactLink {
   icon: ReactNode;
   id: number;
 }
-
-export interface IProjectStatic {
-  title: string;
-  id: number;
-  img: string;
-  description: string;
-}
-
 export type StateActions =
   | IToggleBooleanValue
   | ISetBooleanValue

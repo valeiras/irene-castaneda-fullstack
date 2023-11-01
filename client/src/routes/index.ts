@@ -8,5 +8,5 @@ export { default as Login } from './Login';
 export { default as AdminLayout } from './AdminLayout';
 export { default as AdminProjects } from './AdminProjects';
 export { default as AdminPublications } from './AdminPublications';
-export { default as AdminTutoring } from './AdminTutoring';
+export { default as AdminTutorings } from './AdminTutorings';
 export { default as AdminAuthors } from './AdminAuthors';

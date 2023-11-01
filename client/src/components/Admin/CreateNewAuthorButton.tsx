@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { usePublicationEditorContext } from './PublicationEditor';
+import { usePublicationEditorContext } from './editors/PublicationEditor';
 
 const CreateNewAuthorButton = () => {
   const { isEditDisabled, setIsNewAuthorModalVisible } =

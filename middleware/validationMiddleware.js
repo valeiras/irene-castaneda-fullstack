@@ -10,7 +10,7 @@ import ProjectModel from '../models/ProjectModel.js';
 import PublicationModel from '../models/PublicationModel.js';
 import TutoringModel from '../models/TutoringModel.js';
 import AuthorModel from '../models/AuthorModel.js';
-import { PUBLICATION_TYPES, STUDENT_TYPES } from '../utils/constants.js';
+import { PUBLICATION_TYPES, TUTORING_TYPES } from '../utils/constants.js';
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -117,14 +117,13 @@ export const validatePublicationInput = withValidationErrors([
 ]);
 
 export const validateTutoringInput = withValidationErrors([
-  body('students').notEmpty().withMessage('students are required').trim(),
   body('year').notEmpty().withMessage('year is required'),
   body('description').notEmpty().withMessage('description is required'),
-  body('studentType')
+  body('tutoringType')
     .notEmpty()
-    .withMessage('student type is required')
-    .isIn(Object.values(STUDENT_TYPES))
-    .withMessage('Invalid student type'),
+    .withMessage('tutoring type is required')
+    .isIn(Object.values(TUTORING_TYPES))
+    .withMessage('Invalid tutoring type'),
 ]);
 
 export const validateAuthorInput = withValidationErrors([

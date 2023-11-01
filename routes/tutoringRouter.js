@@ -5,6 +5,7 @@ import {
   getTutoring,
   deleteTutoring,
   updateTutoring,
+  getTutoringTypes,
 } from '../controllers/tutoringController.js';
 import {
   validateTutoringInput,
@@ -22,6 +23,7 @@ router
     [authenticateUser, formidableMiddleware, validateTutoringInput],
     createTutoring
   );
+router.route('/types').get(getTutoringTypes);
 router.use('/:tutoringId', validateTutoringIdParam);
 router
   .route('/:tutoringId')

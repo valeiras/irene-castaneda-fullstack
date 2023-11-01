@@ -8,6 +8,10 @@ import {
   IAuthor,
   IPublicationType,
   IProject,
+  ITutoring,
+  ITutoringType,
+  IFetchTutorings,
+  IFetchTutoringTypes,
 } from './types';
 
 type AuthorsQuery = {
@@ -26,10 +30,24 @@ type PublicationTypesQuery = {
   queryKey: string[];
   queryFn: () => Promise<IPublicationType[]>;
 };
+type TutoringsQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<ITutoring[]>;
+};
+type TutoringTypesQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<ITutoringType[]>;
+};
+
 export type CustomQuery = {
   queryKey: string[];
   queryFn: () => Promise<
-    IPublicationType[] | IPublication[] | IAuthor[] | IProject[]
+    | IPublicationType[]
+    | IPublication[]
+    | IAuthor[]
+    | IProject[]
+    | ITutoring[]
+    | ITutoringType[]
   >;
 };
 
@@ -70,5 +88,25 @@ export const projectsQuery: ProjectsQuery = {
       data: { projects },
     } = await customFetch<IFetchProjects>('projects');
     return projects;
+  },
+};
+
+export const tutoringsQuery: TutoringsQuery = {
+  queryKey: ['tutorings'],
+  queryFn: async () => {
+    const {
+      data: { tutorings },
+    } = await customFetch<IFetchTutorings>('tutorings');
+    return tutorings;
+  },
+};
+
+export const tutoringTypesQuery: TutoringTypesQuery = {
+  queryKey: ['tutoringTypes'],
+  queryFn: async () => {
+    const {
+      data: { tutoringTypes },
+    } = await customFetch<IFetchTutoringTypes>('tutorings/types');
+    return tutoringTypes;
   },
 };

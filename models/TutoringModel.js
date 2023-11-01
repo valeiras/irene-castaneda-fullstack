@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 
-import { STUDENT_TYPES } from '../utils/constants.js';
+import { TUTORING_TYPES } from '../utils/constants.js';
 
 const TutoringSchema = new mongoose.Schema({
-  students: { type: [String], required: true },
+  students: { type: String, required: false },
   year: { type: String, required: true },
   description: { type: String, required: true },
-  studentType: {
+  tutoringType: {
     type: String,
     required: true,
-    enum: Object.values(STUDENT_TYPES),
+    enum: Object.values(TUTORING_TYPES),
   },
 });
 

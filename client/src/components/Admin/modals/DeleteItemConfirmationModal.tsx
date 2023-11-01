@@ -3,7 +3,12 @@ import { ConfirmationModal, Modal } from '..';
 import customFetch from '../../../utils/customFetch';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
-import { IAuthor, IProject, IPublication } from '../../../utils/types';
+import {
+  IAuthor,
+  IProject,
+  IPublication,
+  ITutoring,
+} from '../../../utils/types';
 
 const DeleteItemConfirmationModal: React.FC<{
   isConfirmationModalVisible: boolean;
@@ -12,11 +17,12 @@ const DeleteItemConfirmationModal: React.FC<{
   isNew: boolean;
   endpoint: string;
   queryKey: string[];
-  newItems: (IPublication | IProject | IAuthor)[];
+  newItems: (IPublication | IProject | IAuthor | ITutoring)[];
   setNewItems:
     | React.Dispatch<React.SetStateAction<IPublication[]>>
     | React.Dispatch<React.SetStateAction<IProject[]>>
-    | React.Dispatch<React.SetStateAction<IAuthor[]>>;
+    | React.Dispatch<React.SetStateAction<IAuthor[]>>
+    | React.Dispatch<React.SetStateAction<ITutoring[]>>;
 }> = ({
   isConfirmationModalVisible,
   setIsConfirmationModalVisible,

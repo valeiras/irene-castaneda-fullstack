@@ -25,18 +25,27 @@ import {
   AdminLayout,
   AdminPublications,
   AdminProjects,
-  AdminTutoring,
+  AdminTutorings,
   AdminAuthors,
 } from './routes';
 
+import { loader as researchLoader } from './routes/Research';
+import { loader as teachingLoader } from './routes/Teaching';
+
 import { action as loginAction } from './routes/Login';
 import { loader as adminLoader } from './routes/AdminLayout';
-import { loader as researchLoader } from './routes/Research';
 import {
   loader as publicationsLoader,
   action as publicationsAction,
 } from './routes/AdminPublications';
-import { action as projectsAction } from './routes/AdminProjects';
+import {
+  loader as tutoringsLoader,
+  action as tutoringsAction,
+} from './routes/AdminTutorings';
+import {
+  loader as projectsLoader,
+  action as projectsAction,
+} from './routes/AdminProjects';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,7 +62,11 @@ export const routes = [
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'teaching', element: <Teaching /> },
+      {
+        path: 'teaching',
+        element: <Teaching />,
+        loader: teachingLoader(queryClient),
+      },
       { path: 'contact', element: <Contact /> },
       {
         path: 'research',
@@ -90,8 +103,14 @@ export const routes = [
         path: 'projects',
         element: <AdminProjects />,
         action: projectsAction(queryClient),
+        loader: projectsLoader(queryClient),
       },
-      { path: 'tutoring', element: <AdminTutoring /> },
+      {
+        path: 'tutoring',
+        element: <AdminTutorings />,
+        action: tutoringsAction(queryClient),
+        loader: tutoringsLoader(queryClient),
+      },
     ],
   },
 ];

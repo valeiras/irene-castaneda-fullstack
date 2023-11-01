@@ -1,5 +1,6 @@
-export { default as PublicationEditor } from './PublicationEditor';
-export { default as ProjectEditor } from './ProjectEditor';
+export { default as PublicationEditor } from './editors/PublicationEditor';
+export { default as ProjectEditor } from './editors/ProjectEditor';
+export { default as TutoringEditor } from './editors/TutoringEditor';
 export { default as AuthorsFormRow } from './AuthorsFormRow';
 export { default as FullLineInput } from './FullLineInput';
 export { default as TextAreaInput } from './TextAreaInput';
@@ -10,6 +11,7 @@ export { default as ConfirmationModal } from './modals/ConfirmationModal';
 export { default as DeleteItemConfirmationModal } from './modals/DeleteItemConfirmationModal';
 export { default as InputElement } from './InputElement';
 export { default as AdminPublicationType } from './AdminPublicationType';
+export { default as AdminTutoringType } from './AdminTutoringType';
 export { default as AdminAuthors } from '../../routes/AdminAuthors';
 export { default as CreateNewAuthorButton } from './CreateNewAuthorButton';
 export { default as NewAuthorModal } from './modals/NewAuthorModal';

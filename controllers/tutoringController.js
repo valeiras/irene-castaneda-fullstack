@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import TutoringModel from '../models/TutoringModel.js';
+import { TUTORING_TYPES, typesToLabels } from '../utils/constants.js';
 
 export const getAllTutorings = async (req, res) => {
   const tutorings = await TutoringModel.find();
@@ -9,11 +10,7 @@ export const getAllTutorings = async (req, res) => {
 export const createTutoring = async (req, res) => {
   let newTutoringData = {};
   for (const [key, value] of Object.entries(req.body)) {
-    if (key === 'names') {
-      newTutoringData[key] = value;
-    } else {
-      newTutoringData[key] = value[0];
-    }
+    newTutoringData[key] = value[0];
   }
 
   const newTutoring = await TutoringModel.create(newTutoringData);
@@ -39,11 +36,7 @@ export const deleteTutoring = async (req, res) => {
 export const updateTutoring = async (req, res) => {
   let newTutoringData = {};
   for (const [key, value] of Object.entries(req.body)) {
-    if (key === 'names') {
-      newTutoringData[key] = value;
-    } else {
-      newTutoringData[key] = value[0];
-    }
+    newTutoringData[key] = value[0];
   }
 
   const updatedTutoring = await TutoringModel.findByIdAndUpdate(
@@ -52,4 +45,11 @@ export const updateTutoring = async (req, res) => {
     { new: true }
   );
   res.status(StatusCodes.OK).json({ msg: 'Tutoring updated', updatedTutoring });
+};
+
+export const getTutoringTypes = (req, res) => {
+  const tutoringTypes = Object.values(TUTORING_TYPES).map((type) => {
+    return { type, label: typesToLabels[type] };
+  });
+  res.status(StatusCodes.OK).json({ tutoringTypes });
 };

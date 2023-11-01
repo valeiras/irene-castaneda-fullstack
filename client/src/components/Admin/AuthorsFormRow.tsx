@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BsPlusCircle, BsPlusCircleDotted } from 'react-icons/bs';
 import { AiFillDelete } from 'react-icons/ai';
-import { usePublicationEditorContext } from './PublicationEditor';
+import { usePublicationEditorContext } from './editors/PublicationEditor';
 import { nanoid } from 'nanoid';
 import { authorsQuery } from '../../utils/queries';
 import { useQuery } from '@tanstack/react-query';

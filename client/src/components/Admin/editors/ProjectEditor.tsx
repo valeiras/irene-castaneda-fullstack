@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IProject } from '../../utils/types';
+import { IProject } from '../../../utils/types';
 import { Form } from 'react-router-dom';
 import {
   ButtonStrip,
@@ -7,8 +7,8 @@ import {
   FullLineInput,
   ImageInput,
   TextAreaInput,
-} from '.';
-import { useProjectsContext } from '../../routes/AdminProjects';
+} from '..';
+import { useProjectsContext } from '../../../routes/AdminProjects';
 
 const ProjectEditor: React.FC<{
   project: IProject;

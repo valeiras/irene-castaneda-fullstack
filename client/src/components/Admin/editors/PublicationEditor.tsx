@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { IPublication } from '../../utils/types';
-import FullLineInput from './FullLineInput';
+import { IPublication } from '../../../utils/types';
+import FullLineInput from '../FullLineInput';
 import { useState, createContext, useContext } from 'react';
 import {
   AuthorsFormRow,
@@ -9,9 +9,9 @@ import {
   DeleteItemConfirmationModal,
   JournalInfoFormRow,
   NewAuthorModal,
-} from './';
+} from '..';
 import { Form } from 'react-router-dom';
-import { usePublicationTypeContext } from './AdminPublicationType';
+import { usePublicationTypeContext } from '../AdminPublicationType';
 
 interface IContext {
   isEditDisabled: boolean;

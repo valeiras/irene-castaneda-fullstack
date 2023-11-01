@@ -1,6 +1,6 @@
 import { IPublication } from '../../utils/types';
 import { InputElement } from './';
-import { usePublicationEditorContext } from './PublicationEditor';
+import { usePublicationEditorContext } from './editors/PublicationEditor';
 
 const JournalInfoFormRow: React.FC<{
   publication: IPublication;
