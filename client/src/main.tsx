@@ -27,6 +27,7 @@ import {
   AdminProjects,
   AdminTutorings,
   AdminAuthors,
+  AdminOpportunities,
 } from './routes';
 
 import { loader as researchLoader } from './routes/Research';
@@ -47,11 +48,14 @@ import {
   loader as adminProjsLoader,
   action as adminProjsAction,
 } from './routes/AdminProjects';
-import AdminOpportunities from './routes/AdminOpportunities';
 import {
   loader as adminOppsLoader,
   action as adminOppsAction,
 } from './routes/AdminOpportunities';
+import {
+  loader as adminAutsLoader,
+  action as adminAutsAction,
+} from './routes/AdminAuthors';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -108,8 +112,8 @@ export const routes = [
       {
         path: 'authors',
         element: <AdminAuthors />,
-        // action: authorsAction(queryClient),
-        // loader: authorsLoader(queryClient),
+        action: adminAutsAction(queryClient),
+        loader: adminAutsLoader(queryClient),
       },
       {
         path: 'projects',
