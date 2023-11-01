@@ -24,5 +24,5 @@ const Wrapper = styled.div`
   flex: 1;
   display: flex;
   justify-content: left;
-  padding-left: 4.2rem;
+  padding-left: var(--label-width);
 `;

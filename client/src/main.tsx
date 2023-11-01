@@ -31,21 +31,27 @@ import {
 
 import { loader as researchLoader } from './routes/Research';
 import { loader as teachingLoader } from './routes/Teaching';
+import { loader as opportunitiesLoader } from './routes/Opportunities';
 
 import { action as loginAction } from './routes/Login';
 import { loader as adminLoader } from './routes/AdminLayout';
 import {
-  loader as publicationsLoader,
-  action as publicationsAction,
+  loader as adminPubsLoader,
+  action as adminPubsAction,
 } from './routes/AdminPublications';
 import {
-  loader as tutoringsLoader,
-  action as tutoringsAction,
+  loader as adminTutsLoader,
+  action as adminTutsAction,
 } from './routes/AdminTutorings';
 import {
-  loader as projectsLoader,
-  action as projectsAction,
+  loader as adminProjsLoader,
+  action as adminProjsAction,
 } from './routes/AdminProjects';
+import AdminOpportunities from './routes/AdminOpportunities';
+import {
+  loader as adminOppsLoader,
+  action as adminOppsAction,
+} from './routes/AdminOpportunities';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -73,7 +79,11 @@ export const routes = [
         element: <Research />,
         loader: researchLoader(queryClient),
       },
-      { path: 'opportunities', element: <Opportunities /> },
+      {
+        path: 'opportunities',
+        element: <Opportunities />,
+        loader: opportunitiesLoader(queryClient),
+      },
     ],
   },
   {
@@ -92,24 +102,32 @@ export const routes = [
       {
         path: 'publications',
         element: <AdminPublications />,
-        loader: publicationsLoader(queryClient),
-        action: publicationsAction(queryClient),
+        loader: adminPubsLoader(queryClient),
+        action: adminPubsAction(queryClient),
       },
       {
         path: 'authors',
         element: <AdminAuthors />,
+        // action: authorsAction(queryClient),
+        // loader: authorsLoader(queryClient),
       },
       {
         path: 'projects',
         element: <AdminProjects />,
-        action: projectsAction(queryClient),
-        loader: projectsLoader(queryClient),
+        action: adminProjsAction(queryClient),
+        loader: adminProjsLoader(queryClient),
       },
       {
         path: 'tutoring',
         element: <AdminTutorings />,
-        action: tutoringsAction(queryClient),
-        loader: tutoringsLoader(queryClient),
+        action: adminTutsAction(queryClient),
+        loader: adminTutsLoader(queryClient),
+      },
+      {
+        path: 'opportunities',
+        element: <AdminOpportunities />,
+        action: adminOppsAction(queryClient),
+        loader: adminOppsLoader(queryClient),
       },
     ],
   },

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import {
   IAuthor,
+  IOpportunity,
   IProject,
   IPublication,
   ITutoring,
@@ -17,12 +18,13 @@ const DeleteItemConfirmationModal: React.FC<{
   isNew: boolean;
   endpoint: string;
   queryKey: string[];
-  newItems: (IPublication | IProject | IAuthor | ITutoring)[];
+  newItems: (IPublication | IProject | IAuthor | ITutoring | IOpportunity)[];
   setNewItems:
     | React.Dispatch<React.SetStateAction<IPublication[]>>
     | React.Dispatch<React.SetStateAction<IProject[]>>
     | React.Dispatch<React.SetStateAction<IAuthor[]>>
-    | React.Dispatch<React.SetStateAction<ITutoring[]>>;
+    | React.Dispatch<React.SetStateAction<ITutoring[]>>
+    | React.Dispatch<React.SetStateAction<IOpportunity[]>>;
 }> = ({
   isConfirmationModalVisible,
   setIsConfirmationModalVisible,

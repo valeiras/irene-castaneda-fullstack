@@ -12,7 +12,6 @@ const Teaching: React.FC = () => {
   const { data: tutorings } = useQuery(tutoringsQuery);
   const { data: tutoringTypes } = useQuery(tutoringTypesQuery);
 
-  console.log(tutorings, tutoringTypes);
   if (!tutoringTypes || !tutorings) {
     return <div>Loading...</div>;
   }
@@ -29,16 +28,18 @@ const Teaching: React.FC = () => {
           }
 
           return (
-            <div className="type-list-container">
+            <div className="type-list-container" key={type}>
               <h3>{label}:</h3>
               <ul className="type-container">
-                {currTypeTutorings.map(({ year, students, description }) => {
-                  return (
-                    <li style={{ marker: year }}>{`${year}: ${
-                      students || ''
-                    } ${description}.`}</li>
-                  );
-                })}
+                {currTypeTutorings.map(
+                  ({ year, students, description, _id }) => {
+                    return (
+                      <li key={_id} style={{ marker: year }}>{`${year}: ${
+                        students || ''
+                      } ${description}.`}</li>
+                    );
+                  }
+                )}
               </ul>
             </div>
           );

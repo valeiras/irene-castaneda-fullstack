@@ -45,6 +45,12 @@ export interface IProject {
   _id?: string;
 }
 
+export interface IOpportunity {
+  description: string;
+  isNew?: boolean;
+  _id?: string;
+}
+
 export interface IFetchPublications {
   publications: IPublication[];
 }
@@ -59,6 +65,10 @@ export interface IFetchAuthors {
 
 export interface IFetchProjects {
   projects: IProject[];
+}
+
+export interface IFetchOpportunities {
+  opportunities: IOpportunity[];
 }
 
 export interface IFetchTutorings {

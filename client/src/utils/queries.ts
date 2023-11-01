@@ -12,6 +12,8 @@ import {
   ITutoringType,
   IFetchTutorings,
   IFetchTutoringTypes,
+  IOpportunity,
+  IFetchOpportunities,
 } from './types';
 
 type AuthorsQuery = {
@@ -34,6 +36,10 @@ type TutoringsQuery = {
   queryKey: string[];
   queryFn: () => Promise<ITutoring[]>;
 };
+type OpportunitiesQuery = {
+  queryKey: string[];
+  queryFn: () => Promise<IOpportunity[]>;
+};
 type TutoringTypesQuery = {
   queryKey: string[];
   queryFn: () => Promise<ITutoringType[]>;
@@ -48,6 +54,7 @@ export type CustomQuery = {
     | IProject[]
     | ITutoring[]
     | ITutoringType[]
+    | IOpportunity[]
   >;
 };
 
@@ -88,6 +95,16 @@ export const projectsQuery: ProjectsQuery = {
       data: { projects },
     } = await customFetch<IFetchProjects>('projects');
     return projects;
+  },
+};
+
+export const opportunitiesQuery: OpportunitiesQuery = {
+  queryKey: ['opportunities'],
+  queryFn: async () => {
+    const {
+      data: { opportunities },
+    } = await customFetch<IFetchOpportunities>('opportunities');
+    return opportunities;
   },
 };
 

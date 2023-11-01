@@ -1,6 +1,7 @@
 export { default as PublicationEditor } from './editors/PublicationEditor';
 export { default as ProjectEditor } from './editors/ProjectEditor';
 export { default as TutoringEditor } from './editors/TutoringEditor';
+export { default as OpportunityEditor } from './editors/OpportunityEditor';
 export { default as AuthorsFormRow } from './AuthorsFormRow';
 export { default as FullLineInput } from './FullLineInput';
 export { default as TextAreaInput } from './TextAreaInput';

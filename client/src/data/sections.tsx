@@ -12,4 +12,5 @@ export const adminSections: ISection[] = [
   { name: 'authors', id: 1 },
   { name: 'projects', id: 2 },
   { name: 'tutoring', id: 3 },
+  { name: 'opportunities', id: 4 },
 ];
