@@ -9,6 +9,11 @@ dotenv.config();
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cloudinary from 'cloudinary';
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // routers
 import authRouter from './routes/authRouter.js';
@@ -32,16 +37,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use(express.static(path.resolve(__dirname, './client/dist')));
 app.use(cookieParser());
 app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.send('Hello world');
-});
-
-app.get('/api/v1/test', (req, res) => {
-  res.json({ msg: 'test route' });
-});
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', authenticateUser, userRouter);
@@ -50,6 +48,10 @@ app.use('/api/v1/publications', publicationRouter);
 app.use('/api/v1/tutorings', tutoringRouter);
 app.use('/api/v1/authors', authorRouter);
 app.use('/api/v1/opportunities', opportunityRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
+});
 
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Not found' });
