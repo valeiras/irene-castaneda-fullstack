@@ -11,6 +11,7 @@ import PublicationModel from '../models/PublicationModel.js';
 import TutoringModel from '../models/TutoringModel.js';
 import AuthorModel from '../models/AuthorModel.js';
 import { PUBLICATION_TYPES, TUTORING_TYPES } from '../utils/constants.js';
+import OpportunityModel from '../models/OpportunityModel.js';
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -130,6 +131,10 @@ export const validateAuthorInput = withValidationErrors([
   body('name').notEmpty().withMessage('name is required').trim(),
 ]);
 
+export const validateOpportunityInput = withValidationErrors([
+  body('description').notEmpty().withMessage('description is required').trim(),
+]);
+
 const validateIdParam = (paramName, ObjectModel) => {
   return withValidationErrors([
     param(paramName).custom(async (value, { req }) => {
@@ -158,3 +163,8 @@ export const validateTutoringIdParam = validateIdParam(
 );
 
 export const validateAuthorIdParam = validateIdParam('authorId', AuthorModel);
+
+export const validateOpportunityIdParam = validateIdParam(
+  'opportunityId',
+  OpportunityModel
+);

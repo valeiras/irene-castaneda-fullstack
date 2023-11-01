@@ -17,6 +17,7 @@ import projectRouter from './routes/projectRouter.js';
 import publicationRouter from './routes/publicationRouter.js';
 import tutoringRouter from './routes/tutoringRouter.js';
 import authorRouter from './routes/authorRouter.js';
+import opportunityRouter from './routes/opportunityRouter.js';
 
 // middleware
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
@@ -48,6 +49,7 @@ app.use('/api/v1/projects', projectRouter);
 app.use('/api/v1/publications', publicationRouter);
 app.use('/api/v1/tutorings', tutoringRouter);
 app.use('/api/v1/authors', authorRouter);
+app.use('/api/v1/opportunities', opportunityRouter);
 
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Not found' });
